@@ -1,16 +1,21 @@
 package com.accenture.entities;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
 
+import com.accenture.utils.Util;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements UserDetails{
+public class User implements UserDetails, Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,8 +59,12 @@ public class User implements UserDetails{
 	public User() {
 		numberOfComments = 0;
 		numberOfPosts = 0;
+		profilePic = getDefaultProfilePic();
+		nickname = username;
 		
 	}
+
+
 
 	public User(String username,
 				String password,
@@ -213,8 +222,16 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		return this.isEnabled;
 	}
-	
 
-	
+
+	private byte[] getDefaultProfilePic(){
+		byte[] result = null;
+		try {
+			result =  Files.readAllBytes(new File(Util.DEFAULT_PIC_PATH).toPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }
