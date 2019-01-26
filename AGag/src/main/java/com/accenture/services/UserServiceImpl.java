@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registerUser(UserBindingModel u, BindingResult errors) {
         //TODO add decent validation
-        if(errors.hasErrors() && userRepository.findByUsername(u.getUsername()) != null){
+        if(errors.hasErrors() || userRepository.findByUsername(u.getUsername()) != null){
             return false;
         }
         User user = mapper.map(u, User.class);
@@ -148,5 +149,10 @@ public class UserServiceImpl implements UserService {
         if (!success) return false;
         userRepository.save(u);
         return true;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userRepository.findByUsername(s);
     }
 }

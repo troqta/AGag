@@ -1,1 +1,6 @@
 <p>I AM HOOOOOOOOOOOOOOME</p>
+<h1 sec:authorize="isAuthenticated()" th:text="${user.username}"/>
+<h1 sec:authorize="isAuthenticated()" th:text="${user.nickname}"/>
+<div sec:authorize="hasRole('ADMIN')">
+    <h1>YOU ARE AN ADMIN</h1>
+</div>

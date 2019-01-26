@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -46,8 +44,16 @@ public class User implements UserDetails, Serializable {
     private boolean isCredentialsNonExpired;
 
     private boolean isEnabled;
-	
-    @OneToMany
+
+	@ManyToMany( fetch = FetchType.EAGER,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+			})
+	@JoinTable(name = "user_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id")
+	)
 	private Set<Role> authorities;
 	
     @OneToMany
@@ -60,7 +66,14 @@ public class User implements UserDetails, Serializable {
 		numberOfComments = 0;
 		numberOfPosts = 0;
 		profilePic = getDefaultProfilePic();
-		nickname = username;
+		nickname = getUsername();
+		authorities = new HashSet<>();
+		posts = new ArrayList<>();
+		comments = new ArrayList<>();
+		isAccountNonExpired = true;
+		isAccountNonLocked = true;
+		isCredentialsNonExpired = true;
+		isEnabled = true;
 		
 	}
 

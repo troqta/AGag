@@ -14,7 +14,7 @@ public class Tag {
 
     private String name;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "tags")
     private List<Gag> taggedGags;
 
     public Tag(){

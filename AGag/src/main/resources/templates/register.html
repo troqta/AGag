@@ -1,0 +1,23 @@
+<form th:method="POST" th:action="@{/register}" th:object="${user}">
+
+    <th:block th:each="error : ${errors}">
+        <small th:text="${error.getDefaultMessage()}"></small>
+    </th:block>
+
+
+    <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username">
+    </div>
+
+
+    <div>
+        <label for="password">Password</label>
+        <input type="password"id="password" name="password">
+    </div>
+
+
+    <div class="button-holder d-flex justify-content-center">
+        <button type="submit" class="btn btn-secondary">Register</button>
+    </div>
+</form>

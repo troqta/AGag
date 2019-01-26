@@ -3,7 +3,9 @@ package com.accenture.entities;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Gag {
@@ -26,8 +28,17 @@ public class Gag {
     @OneToMany
     private List<Comment> comments;
 
-    @ManyToMany
-    private List<Tag> tags;
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+            })
+    @JoinTable(name = "tagged_gags",
+            joinColumns = @JoinColumn(name = "gag_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags;
 
     private int upvotes;
 
@@ -39,7 +50,7 @@ public class Gag {
 
 
     public Gag(){
-        tags = new ArrayList<>();
+        tags = new HashSet<>();
         upvotedBy = new ArrayList<>();
         createdOn = new Timestamp(System.currentTimeMillis());
         upvotes = 0;
@@ -85,11 +96,11 @@ public class Gag {
         this.comments = comments;
     }
 
-    public List<Tag> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 
@@ -121,7 +132,7 @@ public class Gag {
                byte[] content,
                User author,
                List<Comment> comments,
-               List<Tag> tags,
+               Set<Tag> tags,
                int upvotes,
                List<User> upvotedBy,
                Timestamp createdOn) {
