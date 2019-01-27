@@ -98,12 +98,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentUser() {
-        if (Util.isAnonymous()) {
-            return null;
-        }
-        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-        return userRepository.findByUsername(user.getUsername());
+        return userRepository.findByUsername(Util.currentUser().getUsername());
     }
 
     @Override

@@ -1,0 +1,14 @@
+<form th:method="POST" enctype="multipart/form-data" th:action="@{/gag/create}" th:object="${user}">
+
+    <div>
+        <label for="name">name</label>
+        <input type="text"id="name" name="name">
+    </div>
+
+    <input name="file" type="file" id="file">
+
+
+    <div class="button-holder d-flex justify-content-center">
+        <button type="submit" class="btn btn-secondary">Create Gag</button>
+    </div>
+</form>

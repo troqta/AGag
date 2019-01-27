@@ -23,5 +23,7 @@ public interface Storage {
 
     void storeWithCustomLocation(String location, MultipartFile file, String oldPath);
 
+    void storeWithCustomLocation(String location, MultipartFile file);
+
 
 }

@@ -98,6 +98,14 @@ public class StorageImpl implements Storage {
         restartUploadLocation();
     }
 
+    @Override
+    public void storeWithCustomLocation(String location, MultipartFile file) {
+
+        setUploadLocation(location);
+        store(file);
+        restartUploadLocation();
+    }
+
 
     private void setUploadLocation(String location) {
         rootLocation = Paths.get(Util.DEFAULT_UPLOAD_DIR + "/" + location);

@@ -1,7 +1,9 @@
 package com.accenture.utils;
 
+import com.accenture.entities.User;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.nio.file.Path;
 
@@ -18,5 +20,13 @@ public class Util {
                 SecurityContextHolder
                         .getContext()
                         .getAuthentication().getClass();
+    }
+
+    public static UserDetails currentUser() {
+        if (Util.isAnonymous()) {
+            return null;
+        }
+        return (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
     }
 }
