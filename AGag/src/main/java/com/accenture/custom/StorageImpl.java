@@ -1,8 +1,7 @@
-package com.accenture.services;
+package com.accenture.custom;
 
 import com.accenture.exceptions.StorageException;
 import com.accenture.exceptions.StorageFileNotFoundException;
-import com.accenture.services.Base.Storage;
 import com.accenture.utils.Util;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

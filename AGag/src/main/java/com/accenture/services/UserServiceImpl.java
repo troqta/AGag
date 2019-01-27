@@ -7,13 +7,12 @@ import com.accenture.entities.User;
 import com.accenture.repositories.GagRepository;
 import com.accenture.repositories.RoleRepository;
 import com.accenture.repositories.UserRepository;
-import com.accenture.services.Base.Storage;
+import com.accenture.custom.Storage;
 import com.accenture.services.Base.UserService;
 import com.accenture.utils.Util;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.nio.file.Files;
 import java.util.List;
 
 @Service

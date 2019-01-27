@@ -21,9 +21,8 @@ public class Tag {
         taggedGags = new ArrayList<>();
     }
 
-    public Tag(String name, List<Gag> taggedGags) {
+    public Tag(String name) {
         this.name = name;
-        this.taggedGags = taggedGags;
     }
 
     public int getId() {

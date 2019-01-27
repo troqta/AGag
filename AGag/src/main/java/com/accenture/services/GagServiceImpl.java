@@ -3,21 +3,23 @@ package com.accenture.services;
 import com.accenture.entities.BindingModels.GagBindingModel;
 import com.accenture.entities.BindingModels.GagEditModel;
 import com.accenture.entities.Gag;
+import com.accenture.entities.Tag;
 import com.accenture.entities.User;
 import com.accenture.repositories.CommentRepository;
 import com.accenture.repositories.GagRepository;
 import com.accenture.repositories.TagRepository;
 import com.accenture.repositories.UserRepository;
 import com.accenture.services.Base.GagService;
-import com.accenture.services.Base.Storage;
+import com.accenture.custom.Storage;
 import com.accenture.utils.Util;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GagServiceImpl implements GagService {
@@ -70,12 +72,34 @@ public class GagServiceImpl implements GagService {
         gag.setContent("/" + Util.DEFAULT_UPLOAD_DIR + "/" + gag.getName() + "/" + file.getOriginalFilename());
         User author = userRepository.findByUsername(Util.currentUser().getUsername());
         gag.setAuthor(author);
-
+        Set<Tag> tags = handleTags(model.getTagString(), gag);
+        gag.getTags().clear();
+        gag.getTags().addAll(tags);
 
         gagRepository.save(gag);
         return true;
     }
 
+    private Set<Tag> handleTags(String tagString, Gag gag) {
+        String[] tagArray = tagString.split(" ");
+        Set<Tag> tags = new HashSet<>();
+
+        for (String tag : tagArray) {
+            Tag t = tagRepository.findByName(tag);
+
+            if (t == null) {
+                Tag newTag = new Tag(tag);
+                tagRepository.save(newTag);
+                tags.add(newTag);
+            } else {
+                t.getTaggedGags().add(gag);
+
+                tags.add(t);
+                tagRepository.save(t);
+            }
+        }
+        return tags;
+    }
     @Override
     public boolean editGag(GagEditModel model, MultipartFile file) {
         return  false;
