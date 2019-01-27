@@ -29,9 +29,6 @@ public class HomeController {
         if (!Util.isAnonymous()){
             User user = userService.getCurrentUser();
             model.addAttribute("user", user);
-            System.out.println();
-            user.getAuthorities().forEach( x-> System.out.print( x.getAuthority()+ " "));
-
         }
         model.addAttribute("view", "home");
 

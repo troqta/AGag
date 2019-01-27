@@ -12,6 +12,7 @@ import com.accenture.services.Base.UserService;
 import com.accenture.utils.Util;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
     private Storage storage;
 
+    @Value("${my.property}")
+    private String test;
+
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
@@ -53,6 +57,7 @@ public class UserServiceImpl implements UserService {
         this.mapper = mapper;
         this.encoder = encoder;
         this.storage = storage;
+        System.out.println(test);
         checkIfMainRolesExist();
     }
 
