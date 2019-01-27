@@ -7,6 +7,7 @@ import com.accenture.entities.User;
 import com.accenture.repositories.GagRepository;
 import com.accenture.repositories.RoleRepository;
 import com.accenture.repositories.UserRepository;
+import com.accenture.services.Base.Storage;
 import com.accenture.services.Base.UserService;
 import com.accenture.utils.Util;
 import org.modelmapper.ModelMapper;
@@ -36,23 +37,28 @@ public class UserServiceImpl implements UserService {
 
     private BCryptPasswordEncoder encoder;
 
+    private Storage storage;
+
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            GagRepository gagRepository,
                            ModelMapper mapper,
-                           BCryptPasswordEncoder encoder) {
+                           BCryptPasswordEncoder encoder,
+                           Storage storage) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.gagRepository = gagRepository;
         this.mapper = mapper;
         this.encoder = encoder;
+        this.storage = storage;
         checkIfMainRolesExist();
     }
 
     private void checkIfMainRolesExist() {
         List<Role> roles = roleRepository.findAll();
-        if (roles.size() < 2){
+        if (roles.size() < 2) {
             roleRepository.save(new Role("ROLE_USER"));
             roleRepository.save(new Role("ROLE_ADMIN"));
         }
@@ -67,7 +73,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registerUser(UserBindingModel u, BindingResult errors) {
         //TODO add decent validation
-        if(errors.hasErrors() || userRepository.findByUsername(u.getUsername()) != null){
+        if (errors.hasErrors() || userRepository.findByUsername(u.getUsername()) != null) {
             return false;
         }
         User user = mapper.map(u, User.class);
@@ -96,18 +102,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean editUser(User u, UserEditModel edit) {
+    public boolean editUser(User u, UserEditModel edit, MultipartFile file) {
         u.setNickname(edit.getNickname());
         u.setEmail(edit.getEmail());
-        u.setProfilePic(edit.getProfilePic());
+        if (!file.isEmpty()) {
+            storage.storeWithCustomLocation(u.getUsername(), file);
+            u.setProfilePic("/" + Util.DEFAULT_UPLOAD_DIR + "/" + u.getUsername() + "/" + file.getOriginalFilename());
+        }
 
-        if(!edit.getOldPassword().isEmpty()){
-            if(!encoder.matches(u.getPassword(), edit.getOldPassword())){
+        if (!edit.getOldPassword().isEmpty()) {
+            if (!encoder.matches(edit.getOldPassword(), u.getPassword() )) {
                 return false;
             }
             u.setPassword(encoder.encode(edit.getPassword()));
 
         }
+        System.out.println();
+        userRepository.save(u);
         return true;
     }
 
@@ -127,7 +138,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addRoleToUser(int id, String role) {
-        if(!role.startsWith("ROLE_")){
+        if (!role.startsWith("ROLE_")) {
             role = "ROLE_" + role;
         }
         User u = findById(id);
@@ -140,7 +151,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean removeRoleFromUser(int id, String role) {
-        if(!role.startsWith("ROLE_")){
+        if (!role.startsWith("ROLE_")) {
             role = "ROLE_" + role;
         }
         User u = findById(id);

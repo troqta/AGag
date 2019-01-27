@@ -14,7 +14,7 @@ public interface UserService extends UserDetailsService {
     boolean registerUser(UserBindingModel u, BindingResult errors);
     User findById(int id);
     User getCurrentUser();
-    boolean editUser(User u, UserEditModel edit);
+    boolean editUser(User u, UserEditModel edit, MultipartFile file);
     boolean banUser(int id);
     boolean unbanUser(int id);
     boolean addRoleToUser(int id, String role);

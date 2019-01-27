@@ -1,6 +1,6 @@
 package com.accenture.controllers;
 
-import com.accenture.services.Base.StorageService;
+import com.accenture.services.Base.Storage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/test")
 public class TestController {
 
-    private StorageService storageService;
+    private Storage storage;
 
     @Autowired
-    public TestController(StorageService storageService){
-        this.storageService = storageService;
+    public TestController(Storage storage){
+        this.storage = storage;
     }
 
     @GetMapping("upload")
@@ -33,8 +33,8 @@ public class TestController {
     @PostMapping("upload")
     public String handleUpload(Model model, @RequestParam("file")MultipartFile file){
 
-        storageService.init();
-        storageService.storeWithCustomLocation("test", file);
+        storage.init();
+        storage.storeWithCustomLocation("test", file);
 
 
         return "redirect:/";

@@ -2,7 +2,7 @@ package com.accenture.services;
 
 import com.accenture.exceptions.StorageException;
 import com.accenture.exceptions.StorageFileNotFoundException;
-import com.accenture.services.Base.StorageService;
+import com.accenture.services.Base.Storage;
 import com.accenture.utils.Util;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -21,7 +21,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
 @Service
-public class StorageServiceImpl implements StorageService {
+public class StorageImpl implements Storage {
     private Path rootLocation = Paths.get(Util.DEFAULT_UPLOAD_DIR);
 
     @Override

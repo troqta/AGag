@@ -1,9 +1,16 @@
 package com.accenture.controllers;
 
+import com.accenture.entities.BindingModels.UserEditModel;
+import com.accenture.entities.User;
 import com.accenture.services.Base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/user")
@@ -14,5 +21,31 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/profile")
+    public String viewProfile(Model model){
+
+        User user = userService.getCurrentUser();
+        model.addAttribute("user", user);
+        model.addAttribute("view", "/user/profile");
+        return "base-layout";
+    }
+
+    @GetMapping("/edit")
+    public String editProfile(Model model){
+
+        User user = userService.getCurrentUser();
+
+        model.addAttribute("user",  user);
+        model.addAttribute("view", "/user/edit");
+
+        return "base-layout";
+    }
+    @PostMapping("/edit")
+    public String handleEdit(UserEditModel editModel, @RequestParam("file")MultipartFile file){
+        userService.editUser(userService.getCurrentUser(), editModel, file);
+
+        return "redirect:/user/profile";
     }
 }

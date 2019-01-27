@@ -1,0 +1,25 @@
+<form th:method="POST" enctype="multipart/form-data" th:action="@{/user/edit}" th:object="${user}">
+
+    <div>
+        <label for="password">Password</label>
+        <input type="password"id="password" name="password">
+    </div>
+    <div>
+        <label for="oldPassword">oldPassword</label>
+        <input type="password"id="oldPassword" name="oldPassword">
+    </div>
+    <div>
+        <label for="nickname">Nickname: </label>
+        <input th:value="*{nickname}" type="nickname"id="nickname" name="nickname">
+    </div>
+    <div>
+        <label for="email">Email: </label>
+        <input th:value="*{email}" type="email"id="email" name="email">
+    </div>
+    <input name="file" type="file" id="file">
+
+
+    <div class="button-holder d-flex justify-content-center">
+        <button type="submit" class="btn btn-secondary">Register</button>
+    </div>
+</form>
