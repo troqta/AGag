@@ -19,8 +19,8 @@ public class Gag {
     private String name;
 
     @Lob
-    @Column(nullable=false, columnDefinition="mediumblob")
-    private byte[] content;
+    @Column(nullable=false)
+    private String content;
 
     @ManyToOne
     private User author;
@@ -72,11 +72,11 @@ public class Gag {
         this.name = name;
     }
 
-    public byte[] getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(byte[] content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
@@ -129,7 +129,7 @@ public class Gag {
     }
 
     public Gag(String name,
-               byte[] content,
+               String content,
                User author,
                List<Comment> comments,
                Set<Tag> tags,

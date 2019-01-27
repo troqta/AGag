@@ -9,9 +9,9 @@ public class UserEditModel {
 
     private String email;
 
-    private byte[] profilePic;
+    private String profilePic;
 
-    public UserEditModel(String nickname, String password, String oldPassword, String email, byte[] profilePic) {
+    public UserEditModel(String nickname, String password, String oldPassword, String email, String profilePic) {
         this.nickname = nickname;
         this.password = password;
         this.oldPassword = oldPassword;
@@ -35,7 +35,7 @@ public class UserEditModel {
         return email;
     }
 
-    public byte[] getProfilePic() {
+    public String getProfilePic() {
         return profilePic;
     }
 }

@@ -9,7 +9,6 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.accenture.utils.Util;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -26,8 +25,8 @@ public class User implements UserDetails, Serializable {
 	private String password;
 
 	@Lob
-	@Column(nullable=false, columnDefinition="mediumblob")
-	private byte[] profilePic;
+	@Column(nullable=false)
+	private String profilePic;
 	
 	private String nickname;
 	
@@ -65,7 +64,7 @@ public class User implements UserDetails, Serializable {
 	public User() {
 		numberOfComments = 0;
 		numberOfPosts = 0;
-		profilePic = getDefaultProfilePic();
+		profilePic = Util.DEFAULT_PIC_PATH;
 		nickname = getUsername();
 		authorities = new HashSet<>();
 		posts = new ArrayList<>();
@@ -81,7 +80,7 @@ public class User implements UserDetails, Serializable {
 
 	public User(String username,
 				String password,
-				byte[] profilePic,
+				String profilePic,
 				String nickname,
 				String email,
 				int numberOfPosts,
@@ -125,11 +124,11 @@ public class User implements UserDetails, Serializable {
 		this.password = password;
 	}
 
-	public byte[] getProfilePic() {
+	public String getProfilePic() {
 		return profilePic;
 	}
 
-	public void setProfilePic(byte[] profilePic) {
+	public void setProfilePic(String profilePic) {
 		this.profilePic = profilePic;
 	}
 
@@ -234,17 +233,6 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public boolean isEnabled() {
 		return this.isEnabled;
-	}
-
-
-	private byte[] getDefaultProfilePic(){
-		byte[] result = null;
-		try {
-			result =  Files.readAllBytes(new File(Util.DEFAULT_PIC_PATH).toPath());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return result;
 	}
 	
 }
