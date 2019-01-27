@@ -30,13 +30,13 @@ public class TestController {
         return "base-layout";
     }
 
-    @PostMapping("upload")
-    public String handleUpload(Model model, @RequestParam("file")MultipartFile file){
-
-        storage.init();
-        storage.storeWithCustomLocation("test", file);
-
-
-        return "redirect:/";
-    }
+//    @PostMapping("upload")
+//    public String handleUpload(Model model, @RequestParam("file")MultipartFile file){
+//
+//        storage.init();
+//        storage.storeWithCustomLocation("test", file);
+//
+//
+//        return "redirect:/";
+//    }
 }
