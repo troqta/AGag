@@ -1,9 +1,6 @@
 package com.accenture.entities;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
 import java.util.*;
 
 import javax.persistence.*;
@@ -61,6 +58,13 @@ public class User implements UserDetails, Serializable {
     @OneToMany
     private List<Comment> comments;
 
+    @ManyToMany
+    @JoinTable(name = "user_liked_gags",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "gag_id")
+    )
+    private Set<Gag> likedGags;
+
     public User() {
         numberOfComments = 0;
         numberOfPosts = 0;
@@ -72,6 +76,7 @@ public class User implements UserDetails, Serializable {
         isAccountNonLocked = true;
         isCredentialsNonExpired = true;
         isEnabled = true;
+        likedGags = new HashSet<>();
 
     }
 
@@ -89,7 +94,8 @@ public class User implements UserDetails, Serializable {
                 boolean isEnabled,
                 Set<Role> authorities,
                 List<Gag> posts,
-                List<Comment> comments) {
+                List<Comment> comments,
+                Set<Gag> likedGags) {
         this.username = username;
         this.password = password;
         this.profilePic = profilePic;
@@ -104,6 +110,7 @@ public class User implements UserDetails, Serializable {
         this.authorities = authorities;
         this.posts = posts;
         this.comments = comments;
+        this.likedGags = likedGags;
     }
 
     public int getId() {
@@ -199,6 +206,14 @@ public class User implements UserDetails, Serializable {
         this.comments = comments;
     }
 
+    public Set<Gag> getLikedGags() {
+        return likedGags;
+    }
+
+    public void setLikedGags(Set<Gag> likedGags) {
+        this.likedGags = likedGags;
+    }
+
     @Override
     public Set<Role> getAuthorities() {
         return this.authorities;
@@ -234,4 +249,17 @@ public class User implements UserDetails, Serializable {
         return this.isEnabled;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        User user = (User) obj;
+        return Objects.equals(getId(), user.getId());
+    }
 }

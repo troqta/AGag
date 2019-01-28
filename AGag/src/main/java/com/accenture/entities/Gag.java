@@ -42,8 +42,8 @@ public class Gag {
 
     private int upvotes;
 
-    @OneToMany
-    private List<User> upvotedBy;
+    @OneToMany(mappedBy = "likedGags")
+    private Set<User> upvotedBy;
 
     private Timestamp createdOn;
 
@@ -51,7 +51,7 @@ public class Gag {
 
     public Gag(){
         tags = new HashSet<>();
-        upvotedBy = new ArrayList<>();
+        upvotedBy = new HashSet<>();
         createdOn = new Timestamp(System.currentTimeMillis());
         upvotes = 0;
     }
@@ -112,11 +112,11 @@ public class Gag {
         this.upvotes = upvotes;
     }
 
-    public List<User> getUpvotedBy() {
+    public Set<User> getUpvotedBy() {
         return upvotedBy;
     }
 
-    public void setUpvotedBy(List<User> upvotedBy) {
+    public void setUpvotedBy(Set<User> upvotedBy) {
         this.upvotedBy = upvotedBy;
     }
 
@@ -134,7 +134,7 @@ public class Gag {
                List<Comment> comments,
                Set<Tag> tags,
                int upvotes,
-               List<User> upvotedBy,
+               Set<User> upvotedBy,
                Timestamp createdOn) {
         this.name = name;
         this.content = content;

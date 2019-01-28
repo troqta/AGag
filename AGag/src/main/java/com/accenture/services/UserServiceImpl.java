@@ -63,7 +63,10 @@ public class UserServiceImpl implements UserService {
         if (roles.size() < 2) {
             roleRepository.save(new Role("ROLE_USER"));
             roleRepository.save(new Role("ROLE_ADMIN"));
+
         }
+        User user = userRepository.findByUsername("admin");
+
     }
 
 

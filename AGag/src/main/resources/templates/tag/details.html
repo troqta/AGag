@@ -1,0 +1,18 @@
+<h1 th:text="${tag}"></h1>
+
+
+<div th:each="gag : ${gags}">
+    <div th:object="${gag}">
+        <h2>TITLE: <span th:text="*{name}"></span></h2>
+
+        <img th:src="*{content}" style="width: 300px;">
+
+        <h2>Author name: <span th:text="*{author.nickname}"></span></h2>
+
+        <h2>Upvotes: <span th:text="*{upvotes}"></span></h2>
+        <div th:each="tag : ${gag.tags}">
+            <span th:text="${tag.name}">gag</span>
+        </div>
+
+    </div>
+</div>

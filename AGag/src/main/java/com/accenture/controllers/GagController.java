@@ -22,9 +22,15 @@ public class GagController {
     public GagController(GagService gagService) {
         this.gagService = gagService;
     }
+
     @RequestMapping("/{id}")
-    public String viewGag(Model model, @PathVariable int id){
+    public String viewGag(Model model, @PathVariable int id) {
         Gag gag = gagService.getById(id);
+        if (gag == null) {
+            return "redirect:/error/404";
+        }
+        boolean hasLiked = gagService.getCurrentUser().getLikedGags().contains(gag);
+        model.addAttribute("hasLiked", hasLiked);
         model.addAttribute("gag", gag);
         model.addAttribute("view", "/gag/details");
 
@@ -32,7 +38,7 @@ public class GagController {
     }
 
     @GetMapping("/create")
-    public String createPage(Model model){
+    public String createPage(Model model) {
 
         model.addAttribute("view", "/gag/create");
 
@@ -40,20 +46,28 @@ public class GagController {
     }
 
     @PostMapping("/create")
-    public String createGag(@RequestParam("file")MultipartFile file, GagBindingModel model){
-        if (!gagService.createGag(model, file)){
+    public String createGag(@RequestParam("file") MultipartFile file, GagBindingModel model) {
+        if (!gagService.createGag(model, file)) {
             return "redirect:/gag/create";
         }
         return "redirect:/";
     }
 
     @GetMapping("/all")
-    public String all(Model model){
+    public String all(Model model) {
         List<Gag> gags = gagService.getAll();
 
-        model.addAttribute("view","/gag/all");
-        model.addAttribute("gags",gags);
+        model.addAttribute("view", "/gag/all");
+        model.addAttribute("gags", gags);
 
         return "base-layout";
+    }
+
+    @PostMapping("/like/{id}")
+    public String likePost(@PathVariable int id) {
+
+        gagService.likeById(id);
+
+        return "redirect:/gag/" + id;
     }
 }

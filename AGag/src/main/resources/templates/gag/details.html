@@ -10,5 +10,9 @@
     <div th:each="tag : ${gag.tags}">
         <span th:text="${tag.name}">gag</span>
     </div>
-
+    <div th:unless="${hasLiked}">
+        <form th:action="@{/gag/like/{id} (id=${gag.id})}" method="POST">
+            <button type="submit" >Like!</button>
+        </form>
+    </div>
 </div>

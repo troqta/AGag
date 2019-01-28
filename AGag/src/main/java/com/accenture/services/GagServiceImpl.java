@@ -53,7 +53,7 @@ public class GagServiceImpl implements GagService {
 
     @Override
     public Gag getById(int id) {
-        return gagRepository.getOne(id);
+        return gagRepository.findById(id);
     }
 
     @Override
@@ -70,13 +70,15 @@ public class GagServiceImpl implements GagService {
         }
         storage.storeWithCustomLocation(gag.getName(), file);
         gag.setContent("/" + Util.DEFAULT_UPLOAD_DIR + "/" + gag.getName() + "/" + file.getOriginalFilename());
-        User author = userRepository.findByUsername(Util.currentUser().getUsername());
+        User author = getCurrentUser();
         gag.setAuthor(author);
         Set<Tag> tags = handleTags(model.getTagString(), gag);
         gag.getTags().clear();
         gag.getTags().addAll(tags);
-
         gagRepository.save(gag);
+
+        author.getPosts().add(gag);
+        userRepository.save(author);
         return true;
     }
 
@@ -103,5 +105,25 @@ public class GagServiceImpl implements GagService {
     @Override
     public boolean editGag(GagEditModel model, MultipartFile file) {
         return  false;
+    }
+
+    @Override
+    public void likeById(int id) {
+        Gag gag = gagRepository.findById(id);
+
+        User user = getCurrentUser();
+
+        if(!gag.getUpvotedBy().contains(user) && !user.getLikedGags().contains(gag)){
+            gag.setUpvotes(gag.getUpvotes() + 1);
+            gag.getUpvotedBy().add(user);
+            gagRepository.save(gag);
+            user.getLikedGags().add(gag);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public User getCurrentUser() {
+        return userRepository.findByUsername(Util.currentUser().getUsername());
     }
 }
