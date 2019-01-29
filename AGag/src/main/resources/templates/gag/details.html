@@ -4,7 +4,13 @@
 
     <img th:src="*{content}" style="width: 300px;">
 
-    <h2>Author name: <span th:text="*{author.nickname}"></span></h2>
+    <h2>Author: <span th:text="*{author.id}"></span></h2>
+    <a th:href="@{/user/{id}(id=*{author.id})}">
+        <div  class="chip">
+            <img th:src="*{author.profilePic}" alt="Contact Person">
+            <span th:text="*{author.nickname}"></span>
+        </div>
+    </a>
 
     <h2>Upvotes: <span th:text="*{upvotes}"></span></h2>
     <div th:each="tag : ${gag.tags}">
@@ -12,7 +18,7 @@
     </div>
     <div th:unless="${hasLiked}">
         <form th:action="@{/gag/like/{id} (id=${gag.id})}" method="POST">
-            <button type="submit" >Like!</button>
+            <button  type="submit" class="waves-effect waves-light btn"><i class="material-icons left">arrow_upward</i>Like!</button>
         </form>
     </div>
 </div>

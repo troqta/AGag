@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -53,9 +54,12 @@ public class GagController {
         return "redirect:/";
     }
 
-    @GetMapping("/all")
-    public String all(Model model) {
+    @GetMapping("/fresh")
+    public String fresh(Model model) {
         List<Gag> gags = gagService.getAll();
+
+        gags.sort(Comparator.comparing(Gag::getCreatedOn).reversed());
+
 
         model.addAttribute("view", "/gag/all");
         model.addAttribute("gags", gags);
@@ -69,5 +73,18 @@ public class GagController {
         gagService.likeById(id);
 
         return "redirect:/gag/" + id;
+    }
+
+    @GetMapping("/hot")
+    public String hot(Model model) {
+        List<Gag> gags = gagService.getAll();
+
+        gags.sort(Comparator.comparing(Gag::getUpvotes).reversed());
+
+
+        model.addAttribute("view", "/gag/hot");
+        model.addAttribute("gags", gags);
+
+        return "base-layout";
     }
 }

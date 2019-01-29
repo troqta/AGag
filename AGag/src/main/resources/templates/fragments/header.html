@@ -1,3 +1,22 @@
 <div th:fragment="header">
+    <nav class="nav-extended">
+        <div class="nav-wrapper grey darken-3">
+            <a href="/" class="brand-logo">AGag</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a sec:authorize="isAnonymous()" href="/login">Login</a></li>
+                <li><a sec:authorize="isAnonymous()" href="/register">Register</a></li>
+                <li><a sec:authorize="isAuthenticated()" href="/user/profile">Profile</a></li>
+                <li><a sec:authorize="isAuthenticated()" href="/gag/create">Create a Gag!</a></li>
+                <li><a sec:authorize="isAuthenticated()" href="/logout">Logout</a></li>
 
+            </ul>
+        </div>
+        <div class="nav-content grey darken-2">
+            <ul class="tabs tabs-transparent">
+                <li class="tab"><a id="hot" href="/gag/hot">Hot</a></li>
+                <li class="tab disabled"><a id="trending" >Trending</a></li>
+                <li class="tab"><a id="fresh" href="/gag/fresh">Fresh</a></li>
+            </ul>
+        </div>
+    </nav>
 </div>
