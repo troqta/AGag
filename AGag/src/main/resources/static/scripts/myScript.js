@@ -18,9 +18,9 @@ $(document).ready(function () {
     //TODO fix css and add handler with toast
     $('.myUnbanClass').on('click', unbanFunction );
     // $('.modal').modal();
-
+    var button;
     function banFunction(){
-        var button = $(this);
+       button = $(this);
         $item = $(this).closest("tr")
             .find(".username")
         itemText = $item.text();
@@ -32,7 +32,6 @@ $(document).ready(function () {
             xhttp.onload = function(){
                 console.log('RESPONSE TEXT ' + xhttp.responseText);
                 M.toast({html: xhttp.responseText})
-                $('#confirmButton').off('click', '#confirmButton');
             };
             var neshto = xhttp.send();
 
@@ -47,7 +46,7 @@ $(document).ready(function () {
     };
 
      function unbanFunction() {
-         var button = $(this);
+         button = $(this);
         $item = $(this).closest("tr")
             .find(".username")
         itemText = $item.text();
@@ -58,15 +57,14 @@ $(document).ready(function () {
             xhttp.onload = function () {
                 console.log('RESPONSE TEXT ' + xhttp.responseText);
                 M.toast({html: xhttp.responseText})
-                $('#confirmButton').off('click', '#confirmButton');
             };
             xhttp.send();
 
             $item.parent().css('background-color', 'rgba(0, 255, 0, 0.5)');
             $('#confirmButton').prop("onclick", null).off("click");
             button.prop("onclick", null).off("click");
-            button.html('UNBAN');
-            button.on('click', unbanFunction);
+            button.html('BAN');
+            button.on('click', banFunction);
         });
 
         $('.modal').modal();
