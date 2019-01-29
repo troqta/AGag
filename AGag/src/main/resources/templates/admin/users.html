@@ -10,17 +10,17 @@
     </thead>
 
     <tbody>
-    <tr th:each="user : ${users}">
+    <tr th:each="user : ${users}" th:style="${!user.isEnabled()} ? 'background-color:rgba(255, 0, 0 , 0.5)' : 'background-color:rgba(0, 255, 0 , 0.5)'">
         <td class="username" th:text="${user.username}">username</td>
         <td th:text="${user.nickname}">nickname</td>
         <td th:text="${user.posts.size()}">posts</td>
         <td th:text="${user.comments.size()}">comments</td>
         <td>
             <th:block th:if="${user.isEnabled()}">
-                <button data-target="modal1" class="btn modal-trigger myBanClass">BAN</button>
+                <button data-target="modal1" class="btn modal-trigger myBanClass findMe">BAN</button>
             </th:block>
             <th:block th:unless="${user.isEnabled()}">
-                <button data-target="modal1" class="btn modal-trigger myUnbanClass">UNBAN</button>
+                <button data-target="modal1" class="btn modal-trigger myUnbanClass findMe">UNBAN</button>
             </th:block>
         </td>
     </tr>

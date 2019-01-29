@@ -26,26 +26,12 @@ public class AdminRestController {
     @PostMapping("/user/ban/{username}")
     public String banUser(@PathVariable String username) {
 
-        System.out.println("I WANNA BAN " + username);
-        if (Util.isAnonymous() || !userService.getCurrentUser().isAdmin()) {
-            return "YOU HEV NO RIGHT";
-        }
-        userService.ban(username);
-        System.out.println("I JUST BANNED " + username);
-
-        return "I BANNED " + username;
+        return userService.ban(username);
     }
 
     @PostMapping("/user/unban/{username}")
     public String unBanUser(@PathVariable String username) {
 
-        System.out.println("I WANNA UNBAN " + username);
-        if (Util.isAnonymous() || !userService.getCurrentUser().isAdmin()) {
-            return "YOU HEV NO RIGHT";
-        }
-        userService.unBan(username);
-        System.out.println("I JUST UNBANNED " + username);
-
-        return "I UNBANNED " + username;
+        return userService.unBan(username);
     }
 }

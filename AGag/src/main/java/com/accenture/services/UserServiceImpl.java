@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (!edit.getOldPassword().isEmpty()) {
-            if (!encoder.matches(edit.getOldPassword(), u.getPassword() )) {
+            if (!encoder.matches(edit.getOldPassword(), u.getPassword())) {
                 return false;
             }
             u.setPassword(encoder.encode(edit.getPassword()));
@@ -163,38 +163,52 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean ban(String username) {
+    public String ban(String username) {
         Role adminRole = roleRepository.findByAuthority("ROLE_ADMIN");
 
-        if (Util.isAnonymous() || !getCurrentUser().getAuthorities().contains(adminRole)){
-            return false;
+        if (Util.isAnonymous() || !getCurrentUser().getAuthorities().contains(adminRole)) {
+            return "You are not an admin!";
         }
         User user = userRepository.findByUsername(username);
-        if (user.isAdmin()){
-            return false;
+        if(user == null){
+            return "User does not exist!";
+        }
+        if (!user.isEnabled()) {
+            return username + " is already Banned!";
+        }
+        if (user.isAdmin()) {
+            return "You cannot ban another admin!";
         }
         user.setEnabled(false);
         userRepository.save(user);
 
 
-        return true;
+        return "Successfully banned " + username;
     }
+
     @Override
-    public boolean unBan(String username) {
+    public String unBan(String username) {
         Role adminRole = roleRepository.findByAuthority("ROLE_ADMIN");
 
-        if (Util.isAnonymous() || !getCurrentUser().getAuthorities().contains(adminRole)){
-            return false;
+        if (Util.isAnonymous() || !getCurrentUser().getAuthorities().contains(adminRole)) {
+            return "You are not an admin!";
         }
         User user = userRepository.findByUsername(username);
-        if (user.isAdmin()){
-            return false;
+        if(user == null){
+            return "User does not exist!";
+        }
+        if (user.isEnabled()) {
+            return username + " is not banned!";
+        }
+        if (user.isAdmin()) {
+
+            return "You cannot ban another admin!";
         }
         user.setEnabled(true);
         userRepository.save(user);
 
 
-        return true;
+        return "Successfully unbanned " + username;
     }
 
     @Override

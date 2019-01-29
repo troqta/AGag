@@ -14,7 +14,13 @@ $(document).ready(function () {
     var $item;
     
 
-    $('.myBanClass').on('click', function(){
+    $('.myBanClass').on('click', banFunction);
+    //TODO fix css and add handler with toast
+    $('.myUnbanClass').on('click', unbanFunction );
+    // $('.modal').modal();
+
+    function banFunction(){
+        var button = $(this);
         $item = $(this).closest("tr")
             .find(".username")
         itemText = $item.text();
@@ -25,35 +31,45 @@ $(document).ready(function () {
             xhttp.open("POST", "/admin/api/user/ban/"+$item.text(), true);
             xhttp.onload = function(){
                 console.log('RESPONSE TEXT ' + xhttp.responseText);
+                M.toast({html: xhttp.responseText})
+                $('#confirmButton').off('click', '#confirmButton');
             };
             var neshto = xhttp.send();
 
-
-            $item.parent().css('background-color', 'argb(255, 0, 0, 40)');
-            $('#confirmButton').off('click', '#confirmButton');
+            // .css('background-color', 'rgba(255, 0, 0, 40)')
+            $item.parent().css('background-color', 'rgba(255, 0, 0, 0.5)');
+            $('#confirmButton').prop("onclick", null).off("click");
+            button.prop("onclick", null).off("click");
+            button.html('UNBAN');
+            button.on('click', unbanFunction);
         });
         $('.modal').modal();
-    });
-    //TODO fix css and add handler with toast
-    $('.myUnbanClass').on('click', function(){
+    };
+
+     function unbanFunction() {
+         var button = $(this);
         $item = $(this).closest("tr")
-        .find(".username")
+            .find(".username")
         itemText = $item.text();
         $('#userPlaceholder').html("Are you sure you wish to unban " + itemText);
-        $('#confirmButton').on('click', function(){
+        $('#confirmButton').on('click', function () {
             var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "/admin/api/user/unban/"+$item.text(), true);
-            xhttp.onload = function(){
+            xhttp.open("POST", "/admin/api/user/unban/" + $item.text(), true);
+            xhttp.onload = function () {
                 console.log('RESPONSE TEXT ' + xhttp.responseText);
+                M.toast({html: xhttp.responseText})
+                $('#confirmButton').off('click', '#confirmButton');
             };
             xhttp.send();
 
-            $('#confirmButton').off('click', '#confirmButton');
+            $item.parent().css('background-color', 'rgba(0, 255, 0, 0.5)');
+            $('#confirmButton').prop("onclick", null).off("click");
+            button.prop("onclick", null).off("click");
+            button.html('UNBAN');
+            button.on('click', unbanFunction);
         });
 
         $('.modal').modal();
-    });
-    $('.unBanBtnClass')
-    // $('.modal').modal();
+    };
 
 });
