@@ -22,9 +22,13 @@ $(document).ready(function () {
         $('#confirmButton').on('click', function(){
             console.log('I AM IN THE BUTTON');
             var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "/admin/user/ban/"+$item.text(), true);
-           var neshto = xhttp.send();
-           console.log(neshto);
+            xhttp.open("POST", "/admin/api/user/ban/"+$item.text(), true);
+            xhttp.onload = function(){
+                console.log('RESPONSE TEXT ' + xhttp.responseText);
+            };
+            var neshto = xhttp.send();
+
+
             $item.parent().css('background-color', 'argb(255, 0, 0, 40)');
             $('#confirmButton').off('click', '#confirmButton');
         });
@@ -38,7 +42,10 @@ $(document).ready(function () {
         $('#userPlaceholder').html("Are you sure you wish to unban " + itemText);
         $('#confirmButton').on('click', function(){
             var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "/admin/user/unban/"+$item.text(), true);
+            xhttp.open("POST", "/admin/api/user/unban/"+$item.text(), true);
+            xhttp.onload = function(){
+                console.log('RESPONSE TEXT ' + xhttp.responseText);
+            };
             xhttp.send();
 
             $('#confirmButton').off('click', '#confirmButton');
