@@ -16,40 +16,37 @@ $(document).ready(function () {
 
     $('.myBanClass').on('click', function(){
         $item = $(this).closest("tr")
-        .find(".username")
-        
+            .find(".username")
         itemText = $item.text();
-        console.log($item); 
         $('#userPlaceholder').html("Are you sure you wish to ban " + itemText);
-        $('#confirmButton').addClass("banBtnClass");
+        $('#confirmButton').on('click', function(){
+            console.log('I AM IN THE BUTTON');
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/admin/user/ban/"+$item.text(), true);
+           var neshto = xhttp.send();
+           console.log(neshto);
+            $item.parent().css('background-color', 'argb(255, 0, 0, 40)');
+            $('#confirmButton').off('click', '#confirmButton');
+        });
         $('.modal').modal();
     });
-    $('.banBtnClass').on('click', function(){
-        console.log('I AM IN THE BUTTON');
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/admin/user/ban/"+$item.text(), true);
-        xhttp.send();
-        $item.parent().css('background-color', 'argb(255, 0, 0, 40)');
-        $('#confirmButton').removeClass("banBtnClass");
-    });
-
+    //TODO fix css and add handler with toast
     $('.myUnbanClass').on('click', function(){
         $item = $(this).closest("tr")
         .find(".username")
         itemText = $item.text();
-        console.log($item); 
         $('#userPlaceholder').html("Are you sure you wish to unban " + itemText);
-        $('#confirmButton').addClass("unBanBtnClass");
+        $('#confirmButton').on('click', function(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/admin/user/unban/"+$item.text(), true);
+            xhttp.send();
+
+            $('#confirmButton').off('click', '#confirmButton');
+        });
 
         $('.modal').modal();
     });
-    $('.unBanBtnClass').on('click', function(){
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/admin/user/unban/"+$item.text(), true);
-        xhttp.send();
-    
-        $('#confirmButton').removeClass("unBanBtnClass");
-    });
+    $('.unBanBtnClass')
     // $('.modal').modal();
 
 });
