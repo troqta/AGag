@@ -163,6 +163,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean ban(String username) {
+        Role adminRole = roleRepository.findByAuthority("ROLE_ADMIN");
+
+        if (Util.isAnonymous() || !getCurrentUser().getAuthorities().contains(adminRole)){
+            return false;
+        }
+        User user = userRepository.findByUsername(username);
+        if (user.isAdmin()){
+            return false;
+        }
+        user.setEnabled(false);
+        userRepository.save(user);
+
+
+        return true;
+    }
+    @Override
+    public boolean unBan(String username) {
+        Role adminRole = roleRepository.findByAuthority("ROLE_ADMIN");
+
+        if (Util.isAnonymous() || !getCurrentUser().getAuthorities().contains(adminRole)){
+            return false;
+        }
+        User user = userRepository.findByUsername(username);
+        if (user.isAdmin()){
+            return false;
+        }
+        user.setEnabled(true);
+        userRepository.save(user);
+
+
+        return true;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return userRepository.findByUsername(s);
     }

@@ -5,13 +5,15 @@
 <head th:include="fragments/head" th:with="pageTitle='AccentureGag'"></head>
 
 <body>
-<div>
     <header th:include="fragments/header"></header>
 
-    <main th:include="${view}"></main>
+    <main >
+        <div th:include="${view}"></div>
 
-    <footer th:include="fragments/footer" class="page-footer  blue-grey lighten-1"></footer>
-    <span th:include="fragments/scripts-bundle"></span>
-</div>
+        <footer th:include="fragments/footer" class="page-footer  blue-grey lighten-1"></footer>
+    </main>
+
 </body>
+<span th:include="fragments/scripts-bundle"></span>
+
 </html>

@@ -21,7 +21,6 @@ public class User implements UserDetails, Serializable {
     @Column(nullable = false)
     private String password;
 
-    @Lob
     @Column(nullable = false)
     private String profilePic;
 
@@ -77,7 +76,6 @@ public class User implements UserDetails, Serializable {
         isCredentialsNonExpired = true;
         isEnabled = true;
         likedGags = new HashSet<>();
-
     }
 
 
@@ -261,5 +259,11 @@ public class User implements UserDetails, Serializable {
 
         User user = (User) obj;
         return Objects.equals(getId(), user.getId());
+    }
+    @Transient
+    public boolean isAdmin(){
+        return this.getAuthorities()
+                .stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
     }
 }

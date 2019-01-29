@@ -19,4 +19,6 @@ public interface UserService extends UserDetailsService {
     boolean unbanUser(int id);
     boolean addRoleToUser(int id, String role);
     boolean removeRoleFromUser(int id, String role);
+    boolean ban(String username);
+    boolean unBan(String username);
 }

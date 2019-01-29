@@ -1,0 +1,38 @@
+<table class="highlight responsive-table">
+    <thead>
+    <tr>
+        <th>UserName</th>
+        <th>Nickname</th>
+        <th>Posts</th>
+        <th>Comments</th>
+        <th>Ban</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td class="username" th:text="${user.username}">username</td>
+        <td th:text="${user.nickname}">nickname</td>
+        <td th:text="${user.posts.size()}">posts</td>
+        <td th:text="${user.comments.size()}">comments</td>
+        <td>
+            <th:block th:if="${user.isEnabled()}">
+                <button data-target="modal1" class="btn modal-trigger myBanClass">BAN</button>
+            </th:block>
+            <th:block th:unless="${user.isEnabled()}">
+                <button data-target="modal1" class="btn modal-trigger myUnbanClass">UNBAN</button>
+            </th:block>
+        </td>
+    </tr>
+    </tbody>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4 id="userPlaceholder">Are you sure you wish to ban USER</h4>
+        </div>
+        <div class="modal-footer">
+            <button id="confirmButton" href="#!" class="modal-close waves-effect waves-green btn-flat">Yes</button>
+        </div>
+    </div>
+</table>
