@@ -91,9 +91,11 @@ $(document).ready(function () {
                 for(var gag in arr){
                     $('#loadBox').append(
                         '<div class="myGag">'+
-                            '<a href="/gag/'+arr[gag].id+'">'+arr[gag].name+'</a>'+
-                            '<div class="inline">'+
-                                '<img class="materialboxed" src="'+arr[gag].content+'">'+'</img>'+
+                            '<div style="display : inline-block">'+
+                                '<a href="/gag/'+arr[gag].id+'">'+arr[gag].name+'</a>'+
+                                '<div class="inline">'+
+                                    '<img class="materialboxed" src="'+arr[gag].content+'">'+'</img>'+
+                                '</div>'+
                             '</div>'+
                         '</div>');
                 }

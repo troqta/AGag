@@ -1,13 +1,14 @@
 <div class="alignCenter">
     <div th:each="gag : ${gags}" class="myGag">
-        <a th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
-        <div class="inline">
-            <img class="materialboxed" th:src="${gag.content}">
+        <div style="display: inline-block">
+            <a th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
+            <div class="inline">
+                <img class="materialboxed" th:src="${gag.content}">
+            </div>
         </div>
     </div>
 </div>
 <div id="loadBox" class="alignCenter">
-
 </div>
 <div id="scroll-to" class="myCenter">
     <div class="preloader-wrapper big active ">

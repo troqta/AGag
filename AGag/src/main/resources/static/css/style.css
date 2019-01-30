@@ -21,7 +21,7 @@ body {
   margin-top: 5%;
   margin-bottom: 5%;
   width: auto;
-  display:inline-block;
+  /*display:inline-block;*/
   }
   .myGag img{
       box-shadow:1px 1px 11px #470000;
