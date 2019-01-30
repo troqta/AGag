@@ -11,3 +11,21 @@ body {
       margin-left: 10%;
       margin-right: 10%;
   }
+  .myGag{
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border: 5px solid red;
+  }
+  .myGag img{
+  width: 400px;
+  }
+  .myGag a{
+    display : block;
+  }
+  .myCenter{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5%;
+  }

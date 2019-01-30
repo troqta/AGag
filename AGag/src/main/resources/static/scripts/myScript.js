@@ -71,5 +71,56 @@ $(document).ready(function () {
 
         $('.modal').modal();
     };
+    var counter = 1;
+    function appendPosts(){
+        if(counter != 0){
+            var xhttp = new XMLHttpRequest();
+            xhttp.open('GET', '/api/gag/hot/'+counter, true);
+            xhttp.onload = function(){
+                var textJson = xhttp.responseText;
+                if(textJson === "end"){
+                    counter = 0;
+                    $('#loadBox').append(
+                        '<div>'+
+                            'NO MORE POSTS'+
+                        '</div>');
+                        $('#scroll-to').css('display', 'none');
+                    return;
+                }
+                var arr = JSON.parse(textJson);
+                for(var gag in arr){
+                    $('#loadBox').append(
+                        '<div class="myGag">'+
+                            '<a href="/gag/'+arr[gag].id+'">'+arr[gag].name+'</a>'+
+                            '<img src="'+arr[gag].content+'">'+'</img>'+
+                        '</div>');
+                }
+                console.log(arr);
+                console.log(counter);
+
+                counter++;
+            }
+
+            xhttp.send();
+        }
+
+    }
+    var flag = false;
+    $(window).scroll(function() {
+   var hT = $('#scroll-to').offset().top,
+       hH = $('#scroll-to').outerHeight(),
+       wH = $(window).height(),
+       wS = $(this).scrollTop();
+   if (wS > (hT+hH-wH)){
+       if(flag === false){
+            appendPosts();
+            flag = true;
+            setTimeout(function(){
+                flag = false;
+            }, 3000);
+       }
+       
+   }
+});
 
 });

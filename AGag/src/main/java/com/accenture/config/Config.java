@@ -1,6 +1,8 @@
 package com.accenture.config;
 
 import com.accenture.utils.Util;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,5 +27,13 @@ public class Config extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/upload-dir/**").addResourceLocations(Util.PATH_TO_UPLOAD_DIR);
 
+    }
+
+    @Bean
+    public Gson parser(){
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
     }
 }

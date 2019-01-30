@@ -13,6 +13,7 @@ public class Util {
     public static final String USERNAME_LENGTH_MESSAGE = "Username length should be between 5 and 20 symbols long";
     public static final String DEFAULT_UPLOAD_DIR = "upload-dir";
     public static final String PATH_TO_UPLOAD_DIR = "file:////C:/Users/aleksandar.simeonov/Desktop/AccentureGag/AGag/upload-dir/";
+    public static final int GAGS_PER_PAGE = 2;
 
 
     public static boolean isAnonymous(){

@@ -1,6 +1,10 @@
 package com.accenture.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,18 +12,21 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Gag {
+public class Gag implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private int id;
 
 
     @Column(nullable = false)
+    @Expose
     private String name;
 
-    @Lob
+
     @Column(nullable=false)
+    @Expose
     private String content;
 
     @ManyToOne
@@ -28,6 +35,7 @@ public class Gag {
     @OneToMany
     private List<Comment> comments;
 
+    @Expose
     @ManyToMany(
             fetch = FetchType.EAGER,
             cascade = {
@@ -40,6 +48,7 @@ public class Gag {
     )
     private Set<Tag> tags;
 
+    @Expose
     private int upvotes;
 
     @OneToMany(mappedBy = "likedGags")

@@ -3,6 +3,7 @@ package com.accenture.controllers;
 import com.accenture.entities.BindingModels.GagBindingModel;
 import com.accenture.entities.Gag;
 import com.accenture.services.Base.GagService;
+import com.accenture.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/gag")
@@ -56,9 +58,10 @@ public class GagController {
 
     @GetMapping("/fresh")
     public String fresh(Model model) {
-        List<Gag> gags = gagService.getAll();
-
-        gags.sort(Comparator.comparing(Gag::getCreatedOn).reversed());
+        List<Gag> gags = gagService.getAll().stream()
+                .sorted(Comparator.comparing(Gag::getCreatedOn).reversed())
+                .limit(Util.GAGS_PER_PAGE)
+                .collect(Collectors.toList());
 
 
         model.addAttribute("view", "/gag/all");
@@ -77,9 +80,10 @@ public class GagController {
 
     @GetMapping("/hot")
     public String hot(Model model) {
-        List<Gag> gags = gagService.getAll();
-
-        gags.sort(Comparator.comparing(Gag::getUpvotes).reversed());
+        List<Gag> gags = gagService.getAll().stream()
+                .sorted(Comparator.comparing(Gag::getUpvotes).reversed())
+                .limit(Util.GAGS_PER_PAGE)
+                .collect(Collectors.toList());
 
 
         model.addAttribute("view", "/gag/hot");

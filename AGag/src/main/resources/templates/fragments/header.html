@@ -6,6 +6,7 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a sec:authorize="isAnonymous()" href="/login">Login</a></li>
                 <li><a sec:authorize="isAnonymous()" href="/register">Register</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/admin/users">Users</a></li>
                 <li><a sec:authorize="isAuthenticated()" href="/user/profile">Profile</a></li>
                 <li><a sec:authorize="isAuthenticated()" href="/gag/create">Create a Gag!</a></li>
                 <li><a sec:authorize="isAuthenticated()" href="/logout">Logout</a></li>
@@ -23,6 +24,7 @@
     <ul class="sidenav" id="slide-out">
         <li><a sec:authorize="isAnonymous()" href="/login">Login</a></li>
         <li><a sec:authorize="isAnonymous()" href="/register">Register</a></li>
+        <li><a sec:authorize="hasRole('ADMIN')" href="/admin/users">Users</a></li>
         <li><a sec:authorize="isAuthenticated()" href="/user/profile">Profile</a></li>
         <li><a sec:authorize="isAuthenticated()" href="/gag/create">Create a Gag!</a></li>
         <li><a sec:authorize="isAuthenticated()" href="/logout">Logout</a></li>

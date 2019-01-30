@@ -21,4 +21,6 @@ public interface GagService {
     void likeById(int id);
 
     User getCurrentUser();
+    String getFresh(int number);
+    String getHot(int number);
 }
