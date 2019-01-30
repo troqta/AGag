@@ -26,21 +26,21 @@ $(document).ready(function () {
         itemText = $item.text();
         $('#userPlaceholder').html("Are you sure you wish to ban " + itemText);
         $('#confirmButton').on('click', function(){
-            console.log('I AM IN THE BUTTON');
             var xhttp = new XMLHttpRequest();
             xhttp.open("POST", "/admin/api/user/ban/"+$item.text(), true);
             xhttp.onload = function(){
                 console.log('RESPONSE TEXT ' + xhttp.responseText);
                 M.toast({html: xhttp.responseText})
-            };
-            var neshto = xhttp.send();
-
-            // .css('background-color', 'rgba(255, 0, 0, 40)')
-            $item.parent().css('background-color', 'rgba(255, 0, 0, 0.5)');
+                if(xhttp.responseText.includes('Successfully')){
+                    $item.parent().css('background-color', 'rgba(255, 0, 0, 0.5)');
+                    
+                    button.prop("onclick", null).off("click");
+                    button.html('UNBAN');
+                    button.on('click', unbanFunction);
+                }
+            }
             $('#confirmButton').prop("onclick", null).off("click");
-            button.prop("onclick", null).off("click");
-            button.html('UNBAN');
-            button.on('click', unbanFunction);
+            xhttp.send();
         });
         $('.modal').modal();
     };
@@ -54,17 +54,19 @@ $(document).ready(function () {
         $('#confirmButton').on('click', function () {
             var xhttp = new XMLHttpRequest();
             xhttp.open("POST", "/admin/api/user/unban/" + $item.text(), true);
+            var flag = false;
             xhttp.onload = function () {
                 console.log('RESPONSE TEXT ' + xhttp.responseText);
                 M.toast({html: xhttp.responseText})
-            };
-            xhttp.send();
-
-            $item.parent().css('background-color', 'rgba(0, 255, 0, 0.5)');
+                if(xhttp.responseText.includes('Successfully')){
+                    $item.parent().css('background-color', 'rgba(0, 255, 0, 0.5)');
+                    button.prop("onclick", null).off("click");
+                    button.html('BAN');
+                    button.on('click', banFunction);
+                }
+            }
             $('#confirmButton').prop("onclick", null).off("click");
-            button.prop("onclick", null).off("click");
-            button.html('BAN');
-            button.on('click', banFunction);
+            xhttp.send();
         });
 
         $('.modal').modal();
