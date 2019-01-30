@@ -109,24 +109,44 @@ $(document).ready(function () {
 
     }
     var flag = false;
-    $(window).scroll(function() {
-   var hT = $('#scroll-to').offset().top,
-       hH = $('#scroll-to').outerHeight(),
-       wH = $(window).height(),
-       wS = $(this).scrollTop();
-   if (wS > (hT+hH-wH)){
-       if(flag === false){
-            appendPosts();
-            flag = true;
-            setTimeout(function(){
-                flag = false;
-            }, 3000);
-       }
-       
-   }
-});
+if($('#scroll-to').length){
+        $(window).scroll(function() {
+    var hT = $('#scroll-to').offset().top,
+        hH = $('#scroll-to').outerHeight(),
+        wH = $(window).height(),
+        wS = $(this).scrollTop();
+    if (wS > (hT+hH-wH)){
+        if(flag === false){
+                appendPosts();
+                flag = true;
+                setTimeout(function(){
+                    flag = false;
+                }, 3000);
+        }
+        
+    }
+    });
+}
 $(document).ready(function(){
     $('.materialboxed').materialbox();
   });
 
 });
+let scrollPos = 0;
+const nav = document.querySelector('.site-nav');
+
+function checkPosition() {
+  let windowY = window.scrollY;
+  if (windowY < scrollPos) {
+    // Scrolling UP
+    nav.classList.add('is-visible');
+    nav.classList.remove('is-hidden');
+  } else {
+    // Scrolling DOWN
+    nav.classList.add('is-hidden');
+    nav.classList.remove('is-visible');
+  }
+  scrollPos = windowY;
+}
+
+window.addEventListener('scroll', checkPosition);

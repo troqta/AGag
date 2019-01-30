@@ -11,17 +11,28 @@ body {
       margin-left: 10%;
       margin-right: 10%;
   }
+  .alignCenter{
+  text-align:center;
+  padding: 0 20%;
+  }
   .myGag{
   text-align: center;
   margin: auto;
   margin-top: 5%;
   margin-bottom: 5%;
-  border: 5px solid red;
+  width: auto;
+  display:inline-block;
   }
   .myGag img{
-  width: 400px;
+      box-shadow:1px 1px 11px #470000;
+
+  width: 500px;
   }
   .myGag a{
+    text-align:left;
+    font-weight: bold;
+    font-size: 200%;
+    color: black;
     display : block;
   }
   .myCenter{
@@ -31,4 +42,18 @@ body {
   }
   .inline{
   display:inline-block;
+  }
+  .site-nav.is-hidden {
+      transform: translateY(-100%);
+  }
+  .site-nav.is-visible {
+      transform: translateY(0);
+  }
+  .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      transition: transform 0.25s;
   }
