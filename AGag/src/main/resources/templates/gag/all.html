@@ -1,6 +1,8 @@
 <div th:each="gag : ${gags}" class="myGag">
     <a th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
-    <img th:src="${gag.content}">
+    <div class="inline">
+        <img class="materialboxed" th:src="${gag.content}">
+    </div>
 </div>
 <div id="loadBox">
 

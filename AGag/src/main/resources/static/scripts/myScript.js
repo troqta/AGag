@@ -92,9 +92,12 @@ $(document).ready(function () {
                     $('#loadBox').append(
                         '<div class="myGag">'+
                             '<a href="/gag/'+arr[gag].id+'">'+arr[gag].name+'</a>'+
-                            '<img src="'+arr[gag].content+'">'+'</img>'+
+                            '<div class="inline">'+
+                                '<img class="materialboxed" src="'+arr[gag].content+'">'+'</img>'+
+                            '</div>'+
                         '</div>');
                 }
+                $('.materialboxed').materialbox();
                 console.log(arr);
                 console.log(counter);
 
@@ -122,5 +125,8 @@ $(document).ready(function () {
        
    }
 });
+$(document).ready(function(){
+    $('.materialboxed').materialbox();
+  });
 
 });
