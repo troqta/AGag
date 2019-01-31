@@ -6,6 +6,7 @@ import com.accenture.entities.Gag;
 import com.accenture.entities.User;
 import com.accenture.services.Base.GagService;
 import com.accenture.utils.Util;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +40,7 @@ public class GagController {
         User user = gagService.getCurrentUser();
         if (user != null) {
             hasLiked = user.getLikedGags().contains(gag);
+            model.addAttribute("user", user);
         }
         model.addAttribute("hasLiked", hasLiked);
         model.addAttribute("gag", gag);
@@ -100,7 +102,52 @@ public class GagController {
     }
     @PostMapping("/comment/{id}")
     public String postComment(@PathVariable int id, @Valid CommentBindingModel model){
+        if (Util.isAnonymous()){
+            return "redirect:/error/403";
+        }
         gagService.postComment(id, model);
+        return "redirect:/gag/" + id;
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editGag(@PathVariable int id, Model model){
+        if(Util.isAnonymous()){
+            return "redirect:/error/403";
+        }
+        Gag gag = gagService.getById(id);
+
+        if(gag == null){
+            return "redirect:/error/404";
+
+        }
+        User user = gagService.getCurrentUser();
+        if (!user.isAdmin()){
+            if (!user.isAuthor(gag)){
+                return "redirect:/error/403";
+            }
+        }
+        model.addAttribute("gag", gag);
+        model.addAttribute("view", "/gag/edit");
+
+        return "base-layout";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String handleEditGag(@PathVariable int id, @RequestParam("file") MultipartFile file){
+        if (Util.isAnonymous()){
+            return "redirect:/error/403";
+        }
+        Gag gag = gagService.getById(id);
+        if (gag == null){
+            return "redirect:/error/404";
+        }
+        User user = gagService.getCurrentUser();
+        if (!user.isAdmin()){
+            if (!user.isAuthor(gag)){
+                return "redirect:/error/403";
+            }
+        }
+        gagService.editGag(id, file);
         return "redirect:/gag/" + id;
     }
 }

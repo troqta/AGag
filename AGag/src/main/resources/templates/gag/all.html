@@ -6,12 +6,17 @@
                 <img class="materialboxed" th:src="${gag.content}">
             </div>
             <a class="grayLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="|${gag.upvotes} points  ${gag.comments.size()} comments|"></a>
+            <div style="text-align:left;">
+                <th:block th:each="tag : ${gag.tags}">
+                    <a th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}" class="chip"></a>
+                </th:block>
+            </div>
         </div>
     </div>
 </div>
 <div id="loadBox" class="alignCenter">
 </div>
-<div id="scroll-to" class="myCenter">
+<div id="scroll-toFresh" class="myCenter">
     <div class="preloader-wrapper big active ">
         <div class="spinner-layer spinner-blue">
             <div class="circle-clipper left">

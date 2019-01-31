@@ -10,13 +10,15 @@
     </div>
     <div>
         <label for="nickname">Nickname: </label>
-        <input th:value="*{nickname}" type="nickname"id="nickname" name="nickname">
+        <input th:value="*{nickname}" type="text" id="nickname" name="nickname">
     </div>
     <div>
         <label for="email">Email: </label>
-        <input th:value="*{email}" type="email"id="email" name="email">
+        <input th:value="*{email}" type="email" id="email" name="email">
     </div>
-    <input name="file" type="file" id="file">
+    <img id="oldImg" th:src="*{profilePic}" style="width: 200px;">
+
+    <input name="file" type="file" id="editImg">
 
 
     <div class="button-holder d-flex justify-content-center">

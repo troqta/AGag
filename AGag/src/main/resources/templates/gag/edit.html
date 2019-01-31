@@ -1,0 +1,10 @@
+<form method="POST" enctype="multipart/form-data" th:action="@{/gag/edit/{id} (id=${gag.id})}">
+    <h2>You can only edit a gag's content!</h2>
+    <h3>Current image:</h3>
+    <img style="width:200px;" id="oldImg" th:src="${gag.content}" />
+    <input name="file" type="file" id="editImg">
+
+    <div class="button-holder d-flex justify-content-center">
+        <button type="submit" class="btn btn-secondary">Edit</button>
+    </div>
+</form>

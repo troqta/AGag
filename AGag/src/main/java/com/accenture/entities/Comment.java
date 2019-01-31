@@ -3,6 +3,7 @@ package com.accenture.entities;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -19,13 +20,16 @@ public class Comment {
     @ManyToOne
     private User author;
 
-    public Comment(){
+    private Timestamp postDate;
 
+    public Comment(){
+        postDate = new Timestamp(System.currentTimeMillis());
     }
 
     public Comment(String content, User author) {
         this.content = content;
         this.author = author;
+        postDate = new Timestamp(System.currentTimeMillis());
     }
 
     public int getId() {
@@ -50,5 +54,13 @@ public class Comment {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public Timestamp getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(Timestamp postDate) {
+        this.postDate = postDate;
     }
 }

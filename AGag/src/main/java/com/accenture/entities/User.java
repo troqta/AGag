@@ -266,4 +266,9 @@ public class User implements UserDetails, Serializable {
                 .stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
     }
+
+    @Transient
+    public boolean isAuthor(Gag gag) {
+        return gag.getId() == this.id;
+    }
 }

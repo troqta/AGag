@@ -1,26 +1,26 @@
 
-<div th:object="${gag}">
-    <h2>TITLE: <span th:text="*{name}"></span></h2>
-
-    <img class="materialboxed" th:src="*{content}" style="width: 300px;">
-
-    <h2>Author: <span th:text="*{author.id}"></span></h2>
-    <a th:href="@{/user/{id}(id=*{author.id})}">
-        <div  class="chip">
-            <img th:src="*{author.profilePic}" alt="Contact Person">
-            <span th:text="*{author.nickname}"></span>
+<div class="alignCenter">
+    <div class="myGag">
+        <div style="display: inline-block">
+            <a class="gagLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
+            <div class="inline">
+                <img class="materialboxed" th:src="${gag.content}">
+            </div>
+            <a class="grayLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="|${gag.upvotes} points  ${gag.comments.size()} comments|"></a>
+            <div style="text-align:left;">
+                <th:block th:each="tag : ${gag.tags}">
+                    <a th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}" class="chip"></a>
+                </th:block>
+            </div>
         </div>
-    </a>
-
-    <h2>Upvotes: <span th:text="*{upvotes}"></span></h2>
-    <div th:each="tag : ${gag.tags}">
-        <span th:text="${tag.name}">gag</span>
     </div>
-    <div sec:authorize="isAuthenticated()" th:unless="${hasLiked}">
+</div>
+<div sec:authorize="isAuthenticated()" th:unless="${hasLiked}">
         <form th:action="@{/gag/like/{id} (id=${gag.id})}" method="POST">
             <button  type="submit" class="waves-effect waves-light btn"><i class="material-icons left">arrow_upward</i>Like!</button>
         </form>
     </div>
+    <a sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}"  th:href="@{/gag/edit/{id} (id=${gag.id})}" class="waves-effect waves-light btn">EDIT</a>
 </div>
 <form th:action="@{/gag/comment/{id} (id=${gag.id})}" method="POST" sec:authorize="isAuthenticated()">
     <div>
@@ -30,3 +30,14 @@
     <button  type="submit" class="waves-effect waves-light btn"><i class="material-icons left">comment</i>Comment!</button>
 
 </form>
+<p th:text="|${gag.comments.size()} comments|"></p>
+<div th:each="comment : ${gag.comments}">
+    <div class="comment">
+        <img style="width:60px; display: inline-block;" th:src="${comment.author.profilePic}">
+        <div style="display:inline-block;">
+            <span th:text="${comment.author.nickname}"></span> <span th:text="${comment.postDate}"></span>
+            <p th:text="${comment.content}"></p>
+        </div>
+
+    </div>
+</div>

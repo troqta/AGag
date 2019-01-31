@@ -26,7 +26,9 @@ public class TagController {
     @GetMapping("/{tag}")
     public String viewTag(Model model, @PathVariable String tag){
         Tag tagEntity = tagRepository.findByName(tag);
-
+        if(tagEntity == null){
+            return "redirect:/error/404";
+        }
         List<Gag> gags = tagEntity.getTaggedGags();
 
         model.addAttribute("tag", tag);

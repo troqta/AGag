@@ -2,7 +2,6 @@ package com.accenture.services;
 
 import com.accenture.entities.BindingModels.CommentBindingModel;
 import com.accenture.entities.BindingModels.GagBindingModel;
-import com.accenture.entities.BindingModels.GagEditModel;
 import com.accenture.entities.Comment;
 import com.accenture.entities.Gag;
 import com.accenture.entities.Tag;
@@ -114,8 +113,24 @@ public class GagServiceImpl implements GagService {
         return tags;
     }
     @Override
-    public boolean editGag(GagEditModel model, MultipartFile file) {
-        return  false;
+    public boolean editGag(int id, MultipartFile file) {
+        Gag gag = getById(id);
+        User user = getCurrentUser();
+        if(Util.isAnonymous()){
+            return false;
+        }
+        if (!user.isAdmin()){
+            if(!user.isAuthor(gag)){
+                return false;
+            }
+        }
+
+        if (!file.isEmpty()) {
+            storage.storeWithCustomLocation(gag.getName(), file, gag.getContent().substring(gag.getContent().lastIndexOf("/")));
+            gag.setContent("/" + Util.DEFAULT_UPLOAD_DIR + "/" + gag.getName() + "/" + file.getOriginalFilename());
+        }
+        gagRepository.save(gag);
+        return  true;
     }
 
     @Override
@@ -152,6 +167,7 @@ public class GagServiceImpl implements GagService {
         if(gags.isEmpty()){
             return "end";
         }
+        System.out.println("IM HERE");
         return parser.toJson(gags);
     }
 

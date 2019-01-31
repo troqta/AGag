@@ -72,7 +72,7 @@ $(document).ready(function () {
         $('.modal').modal();
     };
     var counter = 1;
-    function appendPosts(){
+    function appendPostsHot(){
         if(counter != 0){
             var xhttp = new XMLHttpRequest();
             xhttp.open('GET', '/api/gag/hot/'+counter, true);
@@ -84,11 +84,17 @@ $(document).ready(function () {
                         '<div>'+
                             'NO MORE POSTS'+
                         '</div>');
-                        $('#scroll-to').css('display', 'none');
+                        $('#scroll-toHot').css('display', 'none');
                     return;
                 }
                 var arr = JSON.parse(textJson);
                 for(var gag in arr){
+                    var tagArr = arr[gag].tags;
+                    var tags = "";
+                    for(var i in tagArr){
+                        tags += '<a href="/tag/'+tagArr[i].name+'" class="chip">'+tagArr[i].name+'</a>';
+                    }
+                    console.log(tags);
                     $('#loadBox').append(
                         '<div class="myGag">'+
                             '<div style="display : inline-block">'+
@@ -97,7 +103,64 @@ $(document).ready(function () {
                                     '<img class="materialboxed" src="'+arr[gag].content+'">'+'</img>'+
                                 '</div>'+
                                 '<a class="grayLink" href="/gag/'+ arr[gag].id+'">'+arr[gag].upvotes+' points  '+arr[gag].comments.length+' comments</a>'+
+                                '<div style="text-align:left;">'+
+                
+                                    tags+
+                            
+                                '</div>'+
                             '</div>'+
+                        
+                        '</div>');
+                }
+                $('.materialboxed').materialbox();
+                console.log(arr);
+                console.log(counter);
+
+                counter++;
+            }
+
+            xhttp.send();
+        }
+
+    }
+    function appendPostsFresh(){
+        if(counter != 0){
+            var xhttp = new XMLHttpRequest();
+            xhttp.open('GET', '/api/gag/fresh/'+counter, true);
+            xhttp.onload = function(){
+                var textJson = xhttp.responseText;
+                if(textJson === "end"){
+                    counter = 0;
+                    $('#loadBox').append(
+                        '<div>'+
+                            'NO MORE POSTS'+
+                        '</div>');
+                        $('#scroll-toFresh').css('display', 'none');
+                    return;
+                }
+                var arr = JSON.parse(textJson);
+                for(var gag in arr){
+                    var tagArr = arr[gag].tags;
+                    var tags = "";
+                    for(var i in tagArr){
+                        tags += '<a href="/tag/'+tagArr[i].name+'" class="chip">'+tagArr[i].name+'</a>';
+                    }
+                    console.log(tags);
+                    $('#loadBox').append(
+                        '<div class="myGag">'+
+                            '<div style="display : inline-block">'+
+                                '<a class="gagLink" href="/gag/'+arr[gag].id+'">'+arr[gag].name+'</a>'+
+                                '<div class="inline">'+
+                                    '<img class="materialboxed" src="'+arr[gag].content+'">'+'</img>'+
+                                '</div>'+
+                                '<a class="grayLink" href="/gag/'+ arr[gag].id+'">'+arr[gag].upvotes+' points  '+arr[gag].comments.length+' comments</a>'+
+                                '<div style="text-align:left;">'+
+                
+                                    tags+
+                            
+                                '</div>'+
+                            '</div>'+
+                        
                         '</div>');
                 }
                 $('.materialboxed').materialbox();
@@ -112,28 +175,71 @@ $(document).ready(function () {
 
     }
     var flag = false;
-if($('#scroll-to').length){
+    if($('#scroll-toHot').length){
+            $(window).scroll(function() {
+        var hT = $('#scroll-toHot').offset().top,
+            hH = $('#scroll-toHot').outerHeight(),
+            wH = $(window).height(),
+            wS = $(this).scrollTop();
+        if (wS > (hT+hH-wH)){
+            if(flag === false){
+                    appendPostsHot();
+                    flag = true;
+                    setTimeout(function(){
+                        flag = false;
+                    }, 2000);
+            }
+            
+        }
+        });
+    }
+    if($('#scroll-toFresh').length){
         $(window).scroll(function() {
-    var hT = $('#scroll-to').offset().top,
-        hH = $('#scroll-to').outerHeight(),
+    var hT = $('#scroll-toFresh').offset().top,
+        hH = $('#scroll-toFresh').outerHeight(),
         wH = $(window).height(),
         wS = $(this).scrollTop();
     if (wS > (hT+hH-wH)){
         if(flag === false){
-                appendPosts();
+                appendPostsFresh();
                 flag = true;
                 setTimeout(function(){
                     flag = false;
-                }, 3000);
+                }, 2000);
         }
         
     }
     });
 }
-$(document).ready(function(){
-    $('.materialboxed').materialbox();
-  });
+    $(document).ready(function(){
+        $('.materialboxed').materialbox();
+    });
 
+    $('#newImg').change(function(){
+        var input = this;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+        
+            reader.onload = function(e) {
+                $('#preview').remove();
+                $('#previewBox').append('<img id="preview" style="width:200px" src="'+e.target.result+'" />');
+            }
+        
+            reader.readAsDataURL(input.files[0]);
+          }
+    });
+    $('#editImg').change(function(){
+        var input = this;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+        
+            reader.onload = function(e) {
+                $('#oldImg').attr('src', e.target.result);
+            }
+        
+            reader.readAsDataURL(input.files[0]);
+          }
+    });
 });
 let scrollPos = 0;
 const nav = document.querySelector('.site-nav');

@@ -14,4 +14,11 @@ public class ErrorController {
         model.addAttribute("view", "/error/404");
         return "base-layout";
     }
+
+    @GetMapping("/403")
+    public String err403(Model model){
+
+        model.addAttribute("view", "/error/403");
+        return "base-layout";
+    }
 }

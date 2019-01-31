@@ -1,18 +1,19 @@
-<h1 th:text="${tag}"></h1>
+<h1 th:text="|Posts with tag ${tag}|"></h1>
 
 
-<div th:each="gag : ${gags}">
-    <div th:object="${gag}">
-        <h2>TITLE: <span th:text="*{name}"></span></h2>
-
-        <img th:src="*{content}" style="width: 300px;">
-
-        <h2>Author name: <span th:text="*{author.nickname}"></span></h2>
-
-        <h2>Upvotes: <span th:text="*{upvotes}"></span></h2>
-        <div th:each="tag : ${gag.tags}">
-            <span th:text="${tag.name}">gag</span>
+<div class="alignCenter">
+    <div th:each="gag : ${gags}" class="myGag">
+        <div style="display: inline-block">
+            <a class="gagLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
+            <div class="inline">
+                <img class="materialboxed" th:src="${gag.content}">
+            </div>
+            <a class="grayLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="|${gag.upvotes} points  ${gag.comments.size()} comments|"></a>
+            <div style="text-align:left;">
+                <th:block th:each="tag : ${gag.tags}">
+                    <a th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}" class="chip"></a>
+                </th:block>
+            </div>
         </div>
-
     </div>
 </div>
