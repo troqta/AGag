@@ -92,10 +92,11 @@ $(document).ready(function () {
                     $('#loadBox').append(
                         '<div class="myGag">'+
                             '<div style="display : inline-block">'+
-                                '<a href="/gag/'+arr[gag].id+'">'+arr[gag].name+'</a>'+
+                                '<a class="gagLink" href="/gag/'+arr[gag].id+'">'+arr[gag].name+'</a>'+
                                 '<div class="inline">'+
                                     '<img class="materialboxed" src="'+arr[gag].content+'">'+'</img>'+
                                 '</div>'+
+                                '<a class="grayLink" href="/gag/'+ arr[gag].id+'">'+arr[gag].upvotes+' points  '+arr[gag].comments.length+' comments</a>'+
                             '</div>'+
                         '</div>');
                 }

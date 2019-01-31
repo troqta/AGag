@@ -32,6 +32,7 @@ public class Gag implements Serializable {
     @ManyToOne
     private User author;
 
+    @Expose
     @OneToMany
     private List<Comment> comments;
 

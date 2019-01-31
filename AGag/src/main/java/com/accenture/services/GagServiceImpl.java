@@ -1,7 +1,9 @@
 package com.accenture.services;
 
+import com.accenture.entities.BindingModels.CommentBindingModel;
 import com.accenture.entities.BindingModels.GagBindingModel;
 import com.accenture.entities.BindingModels.GagEditModel;
+import com.accenture.entities.Comment;
 import com.accenture.entities.Gag;
 import com.accenture.entities.Tag;
 import com.accenture.entities.User;
@@ -133,6 +135,9 @@ public class GagServiceImpl implements GagService {
 
     @Override
     public User getCurrentUser() {
+        if(Util.currentUser() == null){
+            return null;
+        }
         return userRepository.findByUsername(Util.currentUser().getUsername());
     }
 
@@ -163,5 +168,20 @@ public class GagServiceImpl implements GagService {
             return "end";
         }
         return parser.toJson(gags);
+    }
+
+    @Override
+    public void postComment(int id, CommentBindingModel model) {
+        Gag gag = gagRepository.findById(id);
+        User user = getCurrentUser();
+
+        Comment comment = new Comment(model.getContent(), user);
+
+        user.getComments().add(comment);
+        gag.getComments().add(comment);
+
+        commentRepository.save(comment);
+        gagRepository.save(gag);
+        userRepository.save(user);
     }
 }

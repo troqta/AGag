@@ -1,7 +1,9 @@
 package com.accenture.controllers;
 
+import com.accenture.entities.BindingModels.CommentBindingModel;
 import com.accenture.entities.BindingModels.GagBindingModel;
 import com.accenture.entities.Gag;
+import com.accenture.entities.User;
 import com.accenture.services.Base.GagService;
 import com.accenture.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +35,11 @@ public class GagController {
         if (gag == null) {
             return "redirect:/error/404";
         }
-        boolean hasLiked = gagService.getCurrentUser().getLikedGags().contains(gag);
+        boolean hasLiked = false;
+        User user = gagService.getCurrentUser();
+        if (user != null) {
+            hasLiked = user.getLikedGags().contains(gag);
+        }
         model.addAttribute("hasLiked", hasLiked);
         model.addAttribute("gag", gag);
         model.addAttribute("view", "/gag/details");
@@ -90,5 +97,10 @@ public class GagController {
         model.addAttribute("gags", gags);
 
         return "base-layout";
+    }
+    @PostMapping("/comment/{id}")
+    public String postComment(@PathVariable int id, @Valid CommentBindingModel model){
+        gagService.postComment(id, model);
+        return "redirect:/gag/" + id;
     }
 }

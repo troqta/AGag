@@ -16,9 +16,17 @@
     <div th:each="tag : ${gag.tags}">
         <span th:text="${tag.name}">gag</span>
     </div>
-    <div th:unless="${hasLiked}">
+    <div sec:authorize="isAuthenticated()" th:unless="${hasLiked}">
         <form th:action="@{/gag/like/{id} (id=${gag.id})}" method="POST">
             <button  type="submit" class="waves-effect waves-light btn"><i class="material-icons left">arrow_upward</i>Like!</button>
         </form>
     </div>
 </div>
+<form th:action="@{/gag/comment/{id} (id=${gag.id})}" method="POST" sec:authorize="isAuthenticated()">
+    <div>
+        <label for="content">Comment content</label>
+        <textarea class="materialize-textarea" id="content" name="content"></textarea>
+    </div>
+    <button  type="submit" class="waves-effect waves-light btn"><i class="material-icons left">comment</i>Comment!</button>
+
+</form>

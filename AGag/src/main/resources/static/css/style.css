@@ -6,6 +6,7 @@ body {
 
   main {
     flex: 1 0 auto;
+    margin-top: 15%;
   }
   .custom-margin1{
       margin-left: 10%;
@@ -28,7 +29,7 @@ body {
 
   width: 500px;
   }
-  .myGag a{
+  .gagLink{
     text-align:left;
     font-weight: bold;
     font-size: 200%;
@@ -56,4 +57,12 @@ body {
       right: 0;
       z-index: 10;
       transition: transform 0.25s;
+  }
+  .grayLink{
+        text-align:left;
+        font-weight: normal;
+        font-size: 120%;
+        color: gray;
+        display : block;
+
   }

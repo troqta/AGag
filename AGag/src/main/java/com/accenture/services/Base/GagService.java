@@ -1,5 +1,6 @@
 package com.accenture.services.Base;
 
+import com.accenture.entities.BindingModels.CommentBindingModel;
 import com.accenture.entities.BindingModels.GagBindingModel;
 import com.accenture.entities.BindingModels.GagEditModel;
 import com.accenture.entities.Gag;
@@ -23,4 +24,6 @@ public interface GagService {
     User getCurrentUser();
     String getFresh(int number);
     String getHot(int number);
+
+    void postComment(int id, CommentBindingModel model);
 }

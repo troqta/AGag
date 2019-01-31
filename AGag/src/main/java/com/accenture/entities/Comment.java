@@ -1,5 +1,7 @@
 package com.accenture.entities;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 
@@ -10,6 +12,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Expose
     @Column(nullable = false)
     private String content;
 

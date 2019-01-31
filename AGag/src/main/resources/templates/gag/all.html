@@ -1,10 +1,11 @@
 <div class="alignCenter">
     <div th:each="gag : ${gags}" class="myGag">
         <div style="display: inline-block">
-            <a th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
+            <a class="gagLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
             <div class="inline">
                 <img class="materialboxed" th:src="${gag.content}">
             </div>
+            <a class="grayLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="|${gag.upvotes} points  ${gag.comments.size()} comments|"></a>
         </div>
     </div>
 </div>
