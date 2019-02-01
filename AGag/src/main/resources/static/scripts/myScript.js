@@ -260,6 +260,15 @@ $(document).ready(function () {
         }
         xhttp.send();
     });
+    $('#submitComment').on('click', function(){
+        if($('.commentContent').val() === ""){
+            $('.commentContent').addClass('invalid');
+            M.toast({html: 'Please enter comment content!'});
+        }
+        else{
+            $('#commentForm').submit();
+        }
+    });
 });
 let scrollPos = 0;
 const nav = document.querySelector('.site-nav');
