@@ -219,7 +219,13 @@ public class GagServiceImpl implements GagService {
                 return false;
             }
         }
+        user.getLikedGags().remove(gag);
+        user.getPosts().remove(gag);
+        List<Comment> comments = gag.getComments();
+        user.getComments().removeAll(comments);
         gagRepository.delete(gag);
+        commentRepository.deleteAll(comments);
+        userRepository.save(user);
         return true;
     }
 

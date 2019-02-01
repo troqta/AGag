@@ -16,24 +16,32 @@
     </div>
 </div>
 <div sec:authorize="isAuthenticated()">
-    <!--<form th:action="@{/gag/like/{id} (id=${gag.id})}" method="POST">-->
     <button id="likeBtn" th:classappend="${hasLiked} ? disabled : enabled" class="waves-effect waves-light btn"><i
             class="material-icons left">arrow_upward</i>Like!
     </button>
-    <!--</form>-->
 </div>
-<a sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}"
-   th:href="@{/gag/edit/{id} (id=${gag.id})}" class="waves-effect waves-light btn">EDIT</a>
+<a sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}" class='dropdown-trigger btn'
+   href='#' data-target='dropdown1'>...</a>
+
+<!-- Dropdown Structure -->
+<ul sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}" id='dropdown1'
+    class='dropdown-content'>
+    <li><a th:href="@{/gag/edit/{id} (id=${gag.id})}">EDIT</a></li>
+    <li><a href="javascript:{}" onclick="document.getElementById('deleteForm').submit();" >DELETE</a></li>
+</ul>
+<form sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}" id="deleteForm" th:action="@{/gag/delete/{id} (id=${gag.id})}" method="POST"> </form>
 <div>
     <p th:text="|${gag.comments.size()} comments|"></p>
     <hr>
-    <form id="commentForm" th:action="@{/gag/comment/{id} (id=${gag.id})}" method="POST" sec:authorize="isAuthenticated()">
+    <form id="commentForm" th:action="@{/gag/comment/{id} (id=${gag.id})}" method="POST"
+          sec:authorize="isAuthenticated()">
 
         <div>
             <label for="content">Post a Comment!</label>
             <textarea class="materialize-textarea commentContent" id="content" name="content"></textarea>
         </div>
-        <button id="submitComment" type="button" class="waves-effect waves-light btn green accent-4"><i class="material-icons">comment</i>
+        <button id="submitComment" type="button" class="waves-effect waves-light btn green accent-4"><i
+                class="material-icons">comment</i>
         </button>
 
     </form>

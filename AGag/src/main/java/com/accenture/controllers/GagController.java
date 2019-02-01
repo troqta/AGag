@@ -152,7 +152,7 @@ public class GagController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(int id){
+    public String delete(@PathVariable int id){
         if (!gagService.deleteGag(id)){
             return "redirect:/error/403";
         }

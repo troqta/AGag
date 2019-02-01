@@ -1,4 +1,6 @@
 $(document).ready(function () {
+     $('.dropdown-trigger').dropdown();
+     
     var url = $(location).attr('href');
     if(url.includes("gag")){
         var parameter = url.substring(url.lastIndexOf('/') + 1);
