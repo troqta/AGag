@@ -28,10 +28,6 @@ public class User implements UserDetails, Serializable {
 
     private String email;
 
-    private int numberOfPosts;
-
-    private int numberOfComments;
-
     private boolean isAccountNonExpired;
 
     private boolean isAccountNonLocked;
@@ -65,8 +61,6 @@ public class User implements UserDetails, Serializable {
     private Set<Gag> likedGags;
 
     public User() {
-        numberOfComments = 0;
-        numberOfPosts = 0;
         profilePic = Util.DEFAULT_PIC_PATH;
         authorities = new HashSet<>();
         posts = new ArrayList<>();
@@ -84,8 +78,6 @@ public class User implements UserDetails, Serializable {
                 String profilePic,
                 String nickname,
                 String email,
-                int numberOfPosts,
-                int numberOfComments,
                 boolean isAccountNonExpired,
                 boolean isAccountNonLocked,
                 boolean isCredentialsNonExpired,
@@ -99,8 +91,6 @@ public class User implements UserDetails, Serializable {
         this.profilePic = profilePic;
         this.nickname = nickname;
         this.email = email;
-        this.numberOfPosts = numberOfPosts;
-        this.numberOfComments = numberOfComments;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
@@ -150,22 +140,6 @@ public class User implements UserDetails, Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getNumberOfPosts() {
-        return numberOfPosts;
-    }
-
-    public void setNumberOfPosts(int numberOfPosts) {
-        this.numberOfPosts = numberOfPosts;
-    }
-
-    public int getNumberOfComments() {
-        return numberOfComments;
-    }
-
-    public void setNumberOfComments(int numberOfComments) {
-        this.numberOfComments = numberOfComments;
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {

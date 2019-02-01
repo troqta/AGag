@@ -150,4 +150,12 @@ public class GagController {
         gagService.editGag(id, file);
         return "redirect:/gag/" + id;
     }
+
+    @PostMapping("/delete/{id}")
+    public String delete(int id){
+        if (!gagService.deleteGag(id)){
+            return "redirect:/error/403";
+        }
+        return "redirect:/gag/hot";
+    }
 }

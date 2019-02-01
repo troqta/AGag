@@ -6,7 +6,7 @@
             <div class="inline">
                 <img class="materialboxed" th:src="${gag.content}">
             </div>
-            <a class="grayLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="|${gag.upvotes} points  ${gag.comments.size()} comments|"></a>
+            <a id="pointsComments" class="grayLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="|${gag.upvotes} points  ${gag.comments.size()} comments|"></a>
             <div style="text-align:left;">
                 <th:block th:each="tag : ${gag.tags}">
                     <a th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}" class="chip"></a>
@@ -15,13 +15,12 @@
         </div>
     </div>
 </div>
-<div sec:authorize="isAuthenticated()" th:unless="${hasLiked}">
-        <form th:action="@{/gag/like/{id} (id=${gag.id})}" method="POST">
-            <button  type="submit" class="waves-effect waves-light btn"><i class="material-icons left">arrow_upward</i>Like!</button>
-        </form>
-    </div>
-    <a sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}"  th:href="@{/gag/edit/{id} (id=${gag.id})}" class="waves-effect waves-light btn">EDIT</a>
+<div sec:authorize="isAuthenticated()">
+        <!--<form th:action="@{/gag/like/{id} (id=${gag.id})}" method="POST">-->
+            <button id="likeBtn" th:classappend="${hasLiked} ? disabled : enabled" class="waves-effect waves-light btn"><i class="material-icons left">arrow_upward</i>Like!</button>
+        <!--</form>-->
 </div>
+    <a sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}"  th:href="@{/gag/edit/{id} (id=${gag.id})}" class="waves-effect waves-light btn">EDIT</a>
 <form th:action="@{/gag/comment/{id} (id=${gag.id})}" method="POST" sec:authorize="isAuthenticated()">
     <div>
         <label for="content">Comment content</label>
@@ -32,12 +31,9 @@
 </form>
 <p th:text="|${gag.comments.size()} comments|"></p>
 <div th:each="comment : ${gag.comments}">
-    <div class="comment">
         <img style="width:60px; display: inline-block;" th:src="${comment.author.profilePic}">
         <div style="display:inline-block;">
-            <span th:text="${comment.author.nickname}"></span> <span th:text="${comment.postDate}"></span>
+            <span style="font-weight: 700;font-size: 13px;color: #000;" th:text="${comment.author.nickname}"></span> <span style="font-size: 11px;line-height: 20px;color: #999;"  th:text="${comment.postDate}"></span>
             <p th:text="${comment.content}"></p>
         </div>
-
-    </div>
 </div>

@@ -82,9 +82,12 @@ public class GagServiceImpl implements GagService {
         gag.setContent(path);
         User author = getCurrentUser();
         gag.setAuthor(author);
-        Set<Tag> tags = handleTags(model.getTagString(), gag);
-        gag.getTags().clear();
-        gag.getTags().addAll(tags);
+        if(!model.getTagString().isEmpty()){
+            Set<Tag> tags = handleTags(model.getTagString(), gag);
+            gag.getTags().clear();
+            gag.getTags().addAll(tags);
+        }
+
         gagRepository.save(gag);
 
         author.getPosts().add(gag);
@@ -199,5 +202,43 @@ public class GagServiceImpl implements GagService {
         commentRepository.save(comment);
         gagRepository.save(gag);
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean deleteGag(int id) {
+        if (Util.isAnonymous()){
+            return false;
+        }
+        Gag gag = gagRepository.findById(id);
+        if (gag == null){
+            return false;
+        }
+        User user = getCurrentUser();
+        if (!user.isAdmin()){
+            if (!user.isAuthor(gag)){
+                return false;
+            }
+        }
+        gagRepository.delete(gag);
+        return true;
+    }
+
+    @Override
+    public String likeRest(int id) {
+        if (Util.isAnonymous()){
+            return "You are not logged in!";
+        }
+        Gag gag = gagRepository.findById(id);
+
+        User user = getCurrentUser();
+        if(!gag.getUpvotedBy().contains(user) && !user.getLikedGags().contains(gag)){
+            gag.setUpvotes(gag.getUpvotes() + 1);
+            gag.getUpvotedBy().add(user);
+            gagRepository.save(gag);
+            user.getLikedGags().add(gag);
+            userRepository.save(user);
+            return "Like successful!";
+        }
+        else return "You have already liked this gag!";
     }
 }

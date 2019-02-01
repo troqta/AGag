@@ -240,6 +240,26 @@ $(document).ready(function () {
             reader.readAsDataURL(input.files[0]);
           }
     });
+
+
+    $('#likeBtn').on('click', function(){
+        var xhttp = new XMLHttpRequest();
+        var id = parseInt(url.substring(url.lastIndexOf('/') + 1), 10);
+        xhttp.open('POST', '/api/gag/like/'+ id, true);
+        xhttp.onload = function(){
+            console.log(xhttp.responseText);
+            if(xhttp.responseText.includes('successful')){
+                $('#likeBtn').addClass('disabled');
+                var text = $('#pointsComments').html();
+                var textarr = text.split(' ');
+                var number = parseInt(textarr[0], 10) + 1;
+                textarr[0] = number;
+                $('#pointsComments').html(textarr.join(' '));
+            }
+            M.toast({html: xhttp.responseText});
+        }
+        xhttp.send();
+    });
 });
 let scrollPos = 0;
 const nav = document.querySelector('.site-nav');

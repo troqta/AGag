@@ -25,4 +25,8 @@ public interface GagService {
     String getHot(int number);
 
     void postComment(int id, CommentBindingModel model);
+
+    boolean deleteGag(int id);
+
+    String likeRest(int id);
 }
