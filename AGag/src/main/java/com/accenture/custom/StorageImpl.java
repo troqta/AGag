@@ -110,6 +110,17 @@ public class StorageImpl implements Storage {
 
     }
 
+    @Override
+    public void delete(String path) {
+        if(path.startsWith("/")){
+            path = path.substring(1);
+        }
+        File f = new File(path);
+        if (f.exists()) {
+            f.delete();
+        }
+    }
+
 
     private void setUploadLocation(String location) {
         rootLocation = Paths.get(Util.DEFAULT_UPLOAD_DIR + "/" + location);

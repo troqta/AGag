@@ -51,7 +51,8 @@ public class GagController {
 
     @GetMapping("/create")
     public String createPage(Model model) {
-
+        if(Util.isAnonymous())
+            return "redirect:/error/403";
         model.addAttribute("view", "/gag/create");
 
         return "base-layout";
@@ -59,6 +60,8 @@ public class GagController {
 
     @PostMapping("/create")
     public String createGag(@RequestParam("file") MultipartFile file, GagBindingModel model) {
+        if(Util.isAnonymous())
+            return "redirect:/error/403";
         if (!gagService.createGag(model, file)) {
             return "redirect:/gag/create";
         }
