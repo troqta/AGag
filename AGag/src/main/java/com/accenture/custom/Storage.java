@@ -21,9 +21,9 @@ public interface Storage {
 
     void deleteAll();
 
-    void storeWithCustomLocation(String location, MultipartFile file, String oldPath);
+    String storeWithCustomLocation(String location, MultipartFile file, String oldPath);
 
-    void storeWithCustomLocation(String location, MultipartFile file);
+    String storeWithCustomLocation(String location, MultipartFile file);
 
 
 }

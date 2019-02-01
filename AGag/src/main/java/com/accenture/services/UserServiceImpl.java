@@ -106,8 +106,8 @@ public class UserServiceImpl implements UserService {
         u.setNickname(edit.getNickname());
         u.setEmail(edit.getEmail());
         if (!file.isEmpty()) {
-            storage.storeWithCustomLocation(u.getUsername(), file, u.getProfilePic().substring(u.getProfilePic().lastIndexOf("/")));
-            u.setProfilePic("/" + Util.DEFAULT_UPLOAD_DIR + "/" + u.getUsername() + "/" + file.getOriginalFilename());
+            String filePath = storage.storeWithCustomLocation(u.getUsername(), file, u.getProfilePic().substring(u.getProfilePic().lastIndexOf("/")));
+            u.setProfilePic(filePath);
         }
 
         if (!edit.getOldPassword().isEmpty()) {

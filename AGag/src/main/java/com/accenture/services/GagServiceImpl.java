@@ -78,8 +78,8 @@ public class GagServiceImpl implements GagService {
         if (file.isEmpty()){
             return false;
         }
-        storage.storeWithCustomLocation(gag.getName(), file);
-        gag.setContent("/" + Util.DEFAULT_UPLOAD_DIR + "/" + gag.getName() + "/" + file.getOriginalFilename());
+        String path = storage.storeWithCustomLocation(gag.getName(), file);
+        gag.setContent(path);
         User author = getCurrentUser();
         gag.setAuthor(author);
         Set<Tag> tags = handleTags(model.getTagString(), gag);
@@ -126,8 +126,8 @@ public class GagServiceImpl implements GagService {
         }
 
         if (!file.isEmpty()) {
-            storage.storeWithCustomLocation(gag.getName(), file, gag.getContent().substring(gag.getContent().lastIndexOf("/")));
-            gag.setContent("/" + Util.DEFAULT_UPLOAD_DIR + "/" + gag.getName() + "/" + file.getOriginalFilename());
+            String path = storage.storeWithCustomLocation(gag.getName(), file, gag.getContent().substring(gag.getContent().lastIndexOf("/")));
+            gag.setContent(path);
         }
         gagRepository.save(gag);
         return  true;

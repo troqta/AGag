@@ -86,7 +86,7 @@ public class StorageImpl implements Storage {
     }
 
     @Override
-    public void storeWithCustomLocation(String location, MultipartFile file, String oldPath) {
+    public String storeWithCustomLocation(String location, MultipartFile file, String oldPath) {
 
         setUploadLocation(location);
         File f = new File(rootLocation + "/" + oldPath);
@@ -95,14 +95,19 @@ public class StorageImpl implements Storage {
         }
         store(file);
         restartUploadLocation();
+
+        return "/" + Util.DEFAULT_UPLOAD_DIR + "/" + location + "/" + file.getOriginalFilename();
+
     }
 
     @Override
-    public void storeWithCustomLocation(String location, MultipartFile file) {
+    public String storeWithCustomLocation(String location, MultipartFile file) {
 
         setUploadLocation(location);
         store(file);
         restartUploadLocation();
+        return "/" + Util.DEFAULT_UPLOAD_DIR + "/" + location + "/" + file.getOriginalFilename();
+
     }
 
 
