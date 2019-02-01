@@ -1,9 +1,9 @@
 <div class="alignCenter">
-    <div th:each="gag : ${gags}" class="card">
+    <div th:each="gag : ${gags}" class="myGag">
         <div style="display: inline-block">
             <a class="gagLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
             <div class="inline">
-                <img style="width:450px" class="materialboxed" th:src="${gag.content}">
+                <img class="materialboxed" th:src="${gag.content}">
             </div>
             <a class="grayLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="|${gag.upvotes} points  ${gag.comments.size()} comments|"></a>
             <div style="text-align:left;">
