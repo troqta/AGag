@@ -38,8 +38,6 @@ public class UserServiceImpl implements UserService {
 
     private Storage storage;
 
-    @Value("${my.property}")
-    private String test;
 
 
     @Autowired
@@ -55,7 +53,6 @@ public class UserServiceImpl implements UserService {
         this.mapper = mapper;
         this.encoder = encoder;
         this.storage = storage;
-        System.out.println(test);
         checkIfMainRolesExist();
     }
 

@@ -1,5 +1,6 @@
 package com.accenture.controllers;
 
+import com.accenture.custom.PathProperty;
 import com.accenture.entities.BindingModels.UserBindingModel;
 import com.accenture.entities.User;
 import com.accenture.services.Base.UserService;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +24,8 @@ public class HomeController {
     public HomeController(UserService userService) {
         this.userService = userService;
     }
+        @Autowired
+    private PathProperty pathProperty;
 
     @GetMapping("/")
     public String home(Model model){
@@ -31,6 +33,7 @@ public class HomeController {
             User user = userService.getCurrentUser();
             model.addAttribute("user", user);
         }
+        System.out.println("PROPERTY = " + pathProperty.getPath());
         model.addAttribute("view", "home");
 
 //        return "base-layout";
