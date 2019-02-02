@@ -1,20 +1,24 @@
-<form th:method="POST" enctype="multipart/form-data" th:action="@{/gag/create}" th:object="${user}">
+<div class="container">
+    <div class="card myCard">
+        <form class="myForm" th:method="POST" enctype="multipart/form-data" th:action="@{/gag/create}" th:object="${user}">
+            <h3>New Post: </h3>
+            <div class="input-field">
+                <label for="name">Title</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="input-field">
+                <label for="tagString">Tags</label>
+                <input class="tooltipped" data-position="right" data-tooltip="Tags are separated by a space" type="text" id="tagString" name="tagString">
+            </div>
 
-    <div>
-        <label for="name">name</label>
-        <input type="text"id="name" name="name">
-    </div>
-    <div>
-        <label for="tagString">tags</label>
-        <input type="text"id="tagString" name="tagString">
-    </div>
+            <input name="file" type="file" class="dropify" data-allowed-file-extensions="jpg png jpeg gif" data-height="300">
+            <div id="previewBox">
 
-    <input name="file" type="file" id="newImg">
-    <div id="previewBox">
+            </div>
 
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn btn-secondary myBtn">Create Gag</button>
+            </div>
+        </form>
     </div>
-
-    <div class="button-holder d-flex justify-content-center">
-        <button type="submit" class="btn btn-secondary">Create Gag</button>
-    </div>
-</form>
+</div>

@@ -1,6 +1,7 @@
 $(document).ready(function () {
-     $('.dropdown-trigger').dropdown();
-     
+    $('.dropdown-trigger').dropdown();
+    $('.dropify').dropify();
+    $('.tooltipped').tooltip();
     var url = $(location).attr('href');
     if(url.includes("gag")){
         var parameter = url.substring(url.lastIndexOf('/') + 1);
@@ -83,7 +84,7 @@ $(document).ready(function () {
                 if(textJson === "end"){
                     counter = 0;
                     $('#loadBox').append(
-                        '<div>'+
+                        '<div class="btn disabled bot-margin">'+
                             'NO MORE POSTS'+
                         '</div>');
                         $('#scroll-toHot').css('display', 'none');
@@ -134,7 +135,7 @@ $(document).ready(function () {
                 if(textJson === "end"){
                     counter = 0;
                     $('#loadBox').append(
-                        '<div>'+
+                        '<div class="btn disabled bot-margin">'+
                             'NO MORE POSTS'+
                         '</div>');
                         $('#scroll-toFresh').css('display', 'none');

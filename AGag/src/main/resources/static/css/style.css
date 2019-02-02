@@ -2,67 +2,113 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-  }
+}
 
-  main {
+main {
     flex: 1 0 auto;
     margin-top: 12%;
-  }
-  .custom-margin1{
-      margin-left: 10%;
-      margin-right: 10%;
-  }
-  .alignCenter{
-  text-align:center;
-  padding: 0 20%;
-  }
-  .myGag{
-  text-align: center;
-  margin: auto;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  width: auto;
-  /*display:inline-block;*/
-  }
-  .myGag img{
-      box-shadow:1px 1px 11px #470000;
+}
 
-  width: 500px;
-  }
-  .gagLink{
-    text-align:left;
+.custom-margin1 {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.alignCenter {
+    text-align: center;
+    padding: 0 20%;
+}
+
+.myGag {
+    text-align: center;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: auto;
+    max-width: 500px;
+    /*display:inline-block;*/
+}
+
+.myGag img {
+    box-shadow: 1px 1px 11px #470000;
+
+    width: 500px;
+}
+
+.gagLink {
+    text-align: left;
     font-weight: bold;
     font-size: 200%;
     color: black;
-    display : block;
-  }
-  .myCenter{
+    display: block;
+}
+
+.myCenter {
     width: 100%;
     text-align: center;
     margin-bottom: 5%;
-  }
-  .inline{
-  display:inline-block;
-  }
-  .site-nav.is-hidden {
-      transform: translateY(-100%);
-  }
-  .site-nav.is-visible {
-      transform: translateY(0);
-  }
-  .site-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      transition: transform 0.25s;
-  }
-  .grayLink{
-        text-align:left;
-        font-weight: normal;
-        font-size: 120%;
-        color: gray;
-        display : block;
+}
 
-  }
+.inline {
+    display: inline-block;
+}
+
+.site-nav.is-hidden {
+    transform: translateY(-100%);
+}
+
+.site-nav.is-visible {
+    transform: translateY(0);
+}
+
+.site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    transition: transform 0.25s;
+}
+
+.grayLink {
+    text-align: left;
+    font-weight: normal;
+    font-size: 120%;
+    color: gray;
+    display: block;
+}
+
+.myCard {
+    padding: 5%;
+
+}
+
+.bot-margin {
+    margin-bottom: 30px;
+}
+
+.myForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.myBtn {
+    float: right;
+    margin-top: 10px;
+}
+
+.myCard2 {
+    padding: 2%;
+
+}
+
+.wmx {
+    flex-direction: column;
+    margin: auto;
+    margin-top: 20px;
+}
+.card{
+    margin:auto;
+    width:520px;
+    margin-bottom: 5%;
+}

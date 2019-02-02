@@ -13,15 +13,20 @@
                 </th:block>
             </div>
         </div>
+        <div style="float:left" sec:authorize="isAuthenticated()">
+            <button id="likeBtn" th:classappend="${hasLiked} ? disabled : enabled" class="waves-effect waves-light btn">
+                <i
+                        class="material-icons left">arrow_upward</i>Like!
+            </button>
+        </div>
+        <a style="float:right" sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}"
+           class='dropdown-trigger btn'
+           href='#' data-target='dropdown1'><i
+                class="material-icons">more_vert</i></a>
+
     </div>
+
 </div>
-<div sec:authorize="isAuthenticated()">
-    <button id="likeBtn" th:classappend="${hasLiked} ? disabled : enabled" class="waves-effect waves-light btn"><i
-            class="material-icons left">arrow_upward</i>Like!
-    </button>
-</div>
-<a sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}" class='dropdown-trigger btn'
-   href='#' data-target='dropdown1'>...</a>
 
 <!-- Dropdown Structure -->
 <ul sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}" id='dropdown1'
@@ -31,29 +36,36 @@
 </ul>
 <form sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}" id="deleteForm"
       th:action="@{/gag/delete/{id} (id=${gag.id})}" method="POST"></form>
-<div>
-    <p th:text="|${gag.comments.size()} comments|"></p>
-    <hr>
-    <form id="commentForm" th:action="@{/gag/comment/{id} (id=${gag.id})}" method="POST"
-          sec:authorize="isAuthenticated()">
+<div class="container">
+    <div class="card myCard2">
+        <p th:text="|${gag.comments.size()} comments|"></p>
+        <hr>
+        <div style="display: flex; flex-direction:column; justify-content: flex-start">
+            <form id="commentForm" th:action="@{/gag/comment/{id} (id=${gag.id})}" method="POST"
+                  sec:authorize="isAuthenticated()">
 
-        <div>
-            <label for="content">Post a Comment!</label>
-            <textarea class="materialize-textarea commentContent" id="content" name="content"></textarea>
-        </div>
-        <button id="submitComment" type="button" class="waves-effect waves-light btn green accent-4"><i
-                class="material-icons">comment</i>
-        </button>
+                <div class="input-field wmx">
+                    <label for="content">Post a Comment!</label>
+                    <textarea class="materialize-textarea commentContent" id="content" name="content"></textarea>
+                    <button style="float:right; width:60px;" id="submitComment" type="button"
+                            class="waves-effect waves-light btn green accent-4"><i
+                            class="material-icons">comment</i>
+                    </button>
+                </div>
 
-    </form>
-    <div style="display:flex;" th:each="comment : ${gag.comments}">
-        <div style="display: inline-block;">
-            <img style="width:60px; display: inline-block;" th:src="${comment.author.profilePic}">
-        </div>
-        <div style="display:inline-block;">
-            <span style="font-weight: 700;font-size: 13px;color: #000;" th:text="${comment.author.nickname}"></span>
-            <span style="font-size: 11px;line-height: 20px;color: #999;" th:text="${comment.postDate}"></span>
-            <p th:text="${comment.content}"></p>
+
+            </form>
+            <div style="display:flex;" th:each="comment : ${gag.comments}">
+                <div style="display: inline-block;">
+                    <img style="width:60px; display: inline-block;" th:src="${comment.author.profilePic}">
+                </div>
+                <div style="display:inline-block;">
+                    <span style="font-weight: 700;font-size: 13px;color: #000;"
+                          th:text="${comment.author.nickname}"></span>
+                    <span style="font-size: 11px;line-height: 20px;color: #999;" th:text="${comment.postDate}"></span>
+                    <p th:text="${comment.content}"></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
