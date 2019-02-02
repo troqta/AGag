@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -60,7 +61,10 @@ public class HomeController {
     }
 
     @GetMapping("/login")
-    public String login(Model model){
+    public String login(Model model,  @RequestParam(required = false) String error){
+        if (error != null){
+            model.addAttribute("error", Util.BAD_CREDENTIALS_MESSAGE);
+        }
         model.addAttribute("view", "login");
         return "base-layout";
     }

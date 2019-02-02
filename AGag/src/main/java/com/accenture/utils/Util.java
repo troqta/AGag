@@ -14,6 +14,7 @@ public class Util {
     public static final String DEFAULT_UPLOAD_DIR = "upload-dir";
     public static final String PATH_TO_UPLOAD_DIR = "file:////C:/Users/Fast1r1s/Desktop/AccentureGag/AGag/upload-dir/";
     public static final int GAGS_PER_PAGE = 2;
+    public static final String BAD_CREDENTIALS_MESSAGE = "Wrong username/password!";
 
 
     public static boolean isAnonymous(){
