@@ -1,27 +1,42 @@
-<form th:method="POST" enctype="multipart/form-data" th:action="@{/user/edit}" th:object="${user}">
+<div class="container">
+    <div class="card myCard">
 
-    <div>
-        <label for="password">Password</label>
-        <input type="password"id="password" name="password">
-    </div>
-    <div>
-        <label for="oldPassword">oldPassword</label>
-        <input type="password"id="oldPassword" name="oldPassword">
-    </div>
-    <div>
-        <label for="nickname">Nickname: </label>
-        <input th:value="*{nickname}" type="text" id="nickname" name="nickname">
-    </div>
-    <div>
-        <label for="email">Email: </label>
-        <input th:value="*{email}" type="email" id="email" name="email">
-    </div>
-    <img id="oldImg" th:src="*{profilePic}" style="width: 200px;">
+        <form class="myForm" th:method="POST" enctype="multipart/form-data" th:action="@{/user/edit}" th:object="${user}">
+            <h3>Edit profile: </h3>
+            <label for="oldImg">Profile picture: </label>
+            <img id="oldImg" th:src="*{profilePic}" style="width: 150px;">
 
-    <input name="file" type="file" id="editImg">
+            <div class="input-field ">
+                <label for="username">Username: </label>
+                <input th:placeholder="*{username}" disabled type="text" id="username" name="username">
+            </div>
+            <div class="input-field">
+                <label for="nickname">Nickname: </label>
+                <input th:placeholder="*{nickname}" type="text" id="nickname" name="nickname">
+            </div>
+            <div class="input-field">
+                <label for="email">Email: </label>
+                <input th:placeholder="*{email}" type="email" id="email" name="email">
+            </div>
+            <div class="input-field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div class="input-field">
+                <label for="confirmPassword">Confirm password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword">
+            </div>
+            <div class="input-field">
+                <label for="oldPassword">oldPassword</label>
+                <input type="password" id="oldPassword" name="oldPassword">
+            </div>
+            <label for="file">New profile picture: </label>
+            <input id="file" name="file" type="file" class="dropify" data-allowed-file-extensions="jpg png jpeg gif" data-height="300">
 
 
-    <div class="button-holder d-flex justify-content-center">
-        <button type="submit" class="btn btn-secondary">Register</button>
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn btn-secondary myBtn">SAVE</button>
+            </div>
+        </form>
     </div>
-</form>
+</div>
