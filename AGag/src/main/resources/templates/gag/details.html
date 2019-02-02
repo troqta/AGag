@@ -27,9 +27,10 @@
 <ul sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}" id='dropdown1'
     class='dropdown-content'>
     <li><a th:href="@{/gag/edit/{id} (id=${gag.id})}">EDIT</a></li>
-    <li><a href="javascript:{}" onclick="document.getElementById('deleteForm').submit();" >DELETE</a></li>
+    <li><a href="javascript:{}" onclick="document.getElementById('deleteForm').submit();">DELETE</a></li>
 </ul>
-<form sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}" id="deleteForm" th:action="@{/gag/delete/{id} (id=${gag.id})}" method="POST"> </form>
+<form sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}" id="deleteForm"
+      th:action="@{/gag/delete/{id} (id=${gag.id})}" method="POST"></form>
 <div>
     <p th:text="|${gag.comments.size()} comments|"></p>
     <hr>
@@ -45,8 +46,10 @@
         </button>
 
     </form>
-    <div th:each="comment : ${gag.comments}">
-        <img style="width:60px; display: inline-block;" th:src="${comment.author.profilePic}">
+    <div style="display:flex;" th:each="comment : ${gag.comments}">
+        <div style="display: inline-block;">
+            <img style="width:60px; display: inline-block;" th:src="${comment.author.profilePic}">
+        </div>
         <div style="display:inline-block;">
             <span style="font-weight: 700;font-size: 13px;color: #000;" th:text="${comment.author.nickname}"></span>
             <span style="font-size: 11px;line-height: 20px;color: #999;" th:text="${comment.postDate}"></span>
