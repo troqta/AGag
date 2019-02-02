@@ -1,6 +1,8 @@
 <div class="container" style="margin-bottom:16%;">
     <div class="card myCard">
         <form class="myForm" method="POST" action="login">
+            <h3>Login: </h3>
+
             <div th:if="${error} != null" th:text="${error}" style="color: rgba(255, 0 , 0, 0.5)"></div>
             <div class="input-field">
                 <label for="username">Username</label>

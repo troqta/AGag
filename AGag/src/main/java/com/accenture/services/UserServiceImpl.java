@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -78,7 +79,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registerUser(UserBindingModel u, BindingResult errors) {
         //TODO add decent validation
-        if (errors.hasErrors() || userRepository.findByUsername(u.getUsername()) != null) {
+        if (userRepository.findByUsername(u.getUsername()) != null) {
+            errors.addError(new ObjectError("Username", "Username already taken"));
             return false;
         }
         User user = mapper.map(u, User.class);

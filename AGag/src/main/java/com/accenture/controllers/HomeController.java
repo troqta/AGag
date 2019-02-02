@@ -33,7 +33,8 @@ public class HomeController {
         }
         model.addAttribute("view", "home");
 
-        return "base-layout";
+//        return "base-layout";
+        return "redirect:/gag/hot";
     }
     @GetMapping("/register")
     public String register(Model model) {
