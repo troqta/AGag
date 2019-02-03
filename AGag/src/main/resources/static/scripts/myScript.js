@@ -366,6 +366,34 @@ $(document).ready(function () {
 
         
     });
+    $('#editUserBtn').on('click', function () {
+        var $pass1 = $('#password');
+        var $pass2 = $('#confirmPassword');
+        var $oldPass = $('#oldPassword');
+
+        if($pass1.val().length > 0 || $pass2.val().length > 0 ){
+            if($oldPass.val().length === 0){
+                M.toast({html: 'If you want to change password please enter your old password!'});
+                $oldPass.addClass('invalid');
+                return;
+            }
+            if($pass1.val() !== $pass2.val()){
+                M.toast({html: 'Passwords don\'t match!'});
+                $pass1.addClass('invalid');
+                $pass2.addClass('invalid');
+                return;
+            }
+            if($pass1.val().length < 5 || $pass1.val().length > 20 || $pass2.val().length < 5 || $pass2.val().length > 20){
+                M.toast({html: 'Password should be between 5 and 20 symbols long!'});
+                $pass1.addClass('invalid');
+                $pass2.addClass('invalid');
+                return;
+            }
+        }
+
+
+        $('#editUserForm').submit();
+    });
 });
 let scrollPos = 0;
 const nav = document.querySelector('.site-nav');

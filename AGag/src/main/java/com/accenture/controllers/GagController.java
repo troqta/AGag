@@ -38,7 +38,7 @@ public class GagController {
         }
         boolean hasLiked = false;
         User user = gagService.getCurrentUser();
-        if (user != null) {
+        if (!Util.isAnonymous()) {
             hasLiked = user.getLikedGags().contains(gag);
             model.addAttribute("user", user);
         }

@@ -217,48 +217,88 @@ public class GagServiceImpl implements GagService {
                 return false;
             }
         }
-        user.getLikedGags().remove(gag);
+
         user.getPosts().remove(gag);
+        gag.getAuthor().getPosts().remove(gag);
+        userRepository.save(user);
+        userRepository.save(gag.getAuthor());
         List<Comment> comments = gag.getComments();
-        user.getComments().removeAll(comments);
-        for (Tag tag : gag.getTags()) {
-            tag.getTaggedGags().remove(gag);
-            tagRepository.save(tag);
-        }
+        Set<User> likers = gag.getUpvotedBy();
+        Set<Tag> tags = gag.getTags();
+
+        tags.forEach(t -> {
+            t.getTaggedGags().remove(gag);
+            tagRepository.save(t);
+        });
+        comments.forEach(c -> commentRepository.delete(c));
+        likers.forEach(l -> {
+            l.getLikedGags().remove(gag);
+            userRepository.save(l);
+        });
+        userRepository.findAll().forEach(u -> {
+            u.getLikedGags().remove(gag);
+            userRepository.save(u);
+});
+        comments.clear();
+        likers.clear();
+        tags.clear();
+        gagRepository.save(gag);
         storage.delete(gag.getContent());
         gagRepository.delete(gag);
-        commentRepository.deleteAll(comments);
-        userRepository.save(user);
-        return true;
-    }
 
-    @Override
-    public String likeRest(int id) {
+
+//        user.getLikedGags().remove(gag);
+//        user.getPosts().remove(gag);
+//        userRepository.save(user);
+//        List<Comment> comments = gag.getComments();
+//        user.getComments().removeAll(comments);
+//        gagRepository.save(gag);
+//        for (Tag tag : gag.getTags()) {
+//            tag.getTaggedGags().remove(gag);
+//            tagRepository.save(tag);
+//        }
+//        for (User u : gag.getUpvotedBy()) {
+//            u.getLikedGags().remove(gag);
+//            userRepository.save(u);
+//        }
+//        gag.getUpvotedBy().clear();
+//        gagRepository.save(gag);
+//        storage.delete(gag.getContent());
+//        for(Comment c : comments){
+//            commentRepository.delete(c);
+//        }
+//        comments.clear();
+//        gagRepository.delete(gag);
+        return true;
+        }
+
+@Override
+public String likeRest(int id) {
         if (Util.isAnonymous()){
-            return "You are not logged in!";
+        return "You are not logged in!";
         }
         Gag gag = gagRepository.findById(id);
 
         User user = getCurrentUser();
         if(!gag.getUpvotedBy().contains(user) && !user.getLikedGags().contains(gag)){
-            gag.setUpvotes(gag.getUpvotes() + 1);
-            gag.getUpvotedBy().add(user);
-            gagRepository.save(gag);
-            user.getLikedGags().add(gag);
-            userRepository.save(user);
-            return "Like successful!";
+        gag.setUpvotes(gag.getUpvotes() + 1);
+        gag.getUpvotedBy().add(user);
+        gagRepository.save(gag);
+        user.getLikedGags().add(gag);
+        userRepository.save(user);
+        return "Like successful!";
         }
         else return "You have already liked this gag!";
-    }
+        }
 
-    @Override
-    public String checkIfGagExists(String name) {
+@Override
+public String checkIfGagExists(String name) {
         Gag gag = gagRepository.findByName(name);
         if (gag != null){
-            return "Gag with name " + name + " already exists!";
+        return "Gag with name " + name + " already exists!";
         }
         return "Valid name!";
-    }
+        }
 
 
-}
+        }

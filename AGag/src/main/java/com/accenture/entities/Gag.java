@@ -33,7 +33,7 @@ public class Gag implements Serializable {
     private User author;
 
     @Expose
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @Expose
@@ -52,7 +52,7 @@ public class Gag implements Serializable {
     @Expose
     private int upvotes;
 
-    @OneToMany(mappedBy = "likedGags")
+    @OneToMany(mappedBy = "likedGags", cascade = CascadeType.ALL)
     private Set<User> upvotedBy;
 
     private Timestamp createdOn;

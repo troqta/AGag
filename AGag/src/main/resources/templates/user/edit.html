@@ -1,7 +1,7 @@
 <div class="container">
     <div class="card myCard">
 
-        <form class="myForm" th:method="POST" enctype="multipart/form-data" th:action="@{/user/edit}" th:object="${user}">
+        <form id="editUserForm" class="myForm" th:method="POST" enctype="multipart/form-data" th:action="@{/user/edit}" th:object="${user}">
             <h3>Edit profile: </h3>
             <label for="oldImg">Profile picture: </label>
             <img id="oldImg" th:src="*{profilePic}" style="width: 150px;">
@@ -35,7 +35,7 @@
 
 
             <div class="button-holder d-flex justify-content-center">
-                <button type="submit" class="btn btn-secondary myBtn">SAVE</button>
+                <button id="editUserBtn" type="button" class="btn btn-secondary myBtn">SAVE</button>
             </div>
         </form>
     </div>

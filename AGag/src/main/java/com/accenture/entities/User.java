@@ -53,7 +53,7 @@ public class User implements UserDetails, Serializable {
     @OneToMany
     private List<Comment> comments;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_liked_gags",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "gag_id")
@@ -243,6 +243,6 @@ public class User implements UserDetails, Serializable {
 
     @Transient
     public boolean isAuthor(Gag gag) {
-        return gag.getId() == this.id;
+        return gag.getAuthor().getId() == this.id;
     }
 }
