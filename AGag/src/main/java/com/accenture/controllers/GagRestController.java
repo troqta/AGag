@@ -31,4 +31,10 @@ public class GagRestController {
     public String like(@PathVariable int id){
         return gagService.likeRest(id);
     }
+
+    @GetMapping("/exists/{username}")
+    public String test(@PathVariable String username){
+        System.out.println("im in api gag");
+        return userService.checkIfUserExists(username);
+    }
 }

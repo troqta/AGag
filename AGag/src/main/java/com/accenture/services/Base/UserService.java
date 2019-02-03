@@ -21,4 +21,6 @@ public interface UserService extends UserDetailsService {
     boolean removeRoleFromUser(int id, String role);
     String ban(String username);
     String unBan(String username);
+
+    String checkIfUserExists(String username);
 }

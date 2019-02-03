@@ -1,6 +1,6 @@
 <div class="container">
     <div class="card myCard">
-        <form class="myForm" th:method="POST" enctype="multipart/form-data" th:action="@{/gag/create}" th:object="${user}">
+        <form id="gagForm" class="myForm" th:method="POST" enctype="multipart/form-data" th:action="@{/gag/create}" th:object="${user}">
             <h3>New Post: </h3>
             <div class="input-field">
                 <label for="name">Title</label>
@@ -17,7 +17,7 @@
             </div>
 
             <div class="button-holder d-flex justify-content-center">
-                <button type="submit" class="btn btn-secondary myBtn">Create Gag</button>
+                <button id="gagBtn" type="button" class="btn btn-secondary myBtn">Create Gag</button>
             </div>
         </form>
     </div>

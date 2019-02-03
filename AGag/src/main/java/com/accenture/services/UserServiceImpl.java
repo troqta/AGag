@@ -214,4 +214,14 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return userRepository.findByUsername(s);
     }
+    @Override
+    public String checkIfUserExists(String username) {
+        if (username.length()<5 || username.length() > 20){
+            return "Username must be between 5 and 20 symbols long";
+        }
+        if (userRepository.findByUsername(username) != null){
+            return "Username is already taken!";
+        }
+        return "Username is ok!";
+    }
 }
