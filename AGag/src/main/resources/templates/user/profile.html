@@ -1,16 +1,64 @@
+<div th:object="${user}" class="container" style="margin-bottom:15%;">
+
+    <div style="display: flex; flex-direction: column" class="card myCard3">
+        <div style="display:flex; flex-direction: row">
+        <img th:src="*{profilePic}" style="width: 50%;height: 250px">
+
+        <div class="inline-block">
+            <ul>
+                <li class="myLi"><i class="material-icons">person</i><span th:text="*{username}"></span></li>
+                <li class="myLi"><i class="material-icons">person_outline</i><span th:text="*{nickname}"></span></li>
+
+                <li th:unless="*{email == null}" class="myLi"><i class="material-icons">email</i><span th:text="*{email}"></span></li>
+                <li class="myLi"><i class="material-icons">comment</i><span th:text="*{comments.size()}"></span></li>
+                <li class="myLi"><i class="material-icons">collections</i><span th:text="*{posts.size()}"></span></li>
+                <li class="myLi"><a href="/user/edit" class="myTransparentBtn"><i class="material-icons">settings</i></a></li>
+
+            </ul>
+        </div>
+        </div>
 
 
-<div th:object="${user}">
-    <img th:src="*{profilePic}" style="width: 100px;">
-    <h2>UserName: <span th:text="*{username}"></span></h2>
+        <div class="col s12">
+            <ul id="tabs" class="tabs">
+                <li class="tab myTab col s3"><a class="active" href="#posts">POSTS</a></li>
+                <li class="tab myTab col s3"><a href="#liked">UPVOTED</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="posts">
+        <div th:each="gag : *{posts}" class="myGag">
+            <div style="display: inline-block">
+                <a class="gagLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
+                <div class="inline">
+                    <img class="materialboxed" th:src="${gag.content}">
+                </div>
+                <a class="grayLink" th:href="@{/gag/{id}(id=${gag.id})}"
+                   th:text="|${gag.upvotes} points  ${gag.comments.size()} comments|"></a>
+                <div style="text-align:left;">
+                    <th:block th:each="tag : ${gag.tags}">
+                        <a th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}" class="chip"></a>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="liked">
+        <div th:each="gag : *{likedGags}" class="myGag">
 
-    <h2>nickname: <span th:text="*{nickname}"></span></h2>
-
-    <h2>email: <span th:text="*{email}"></span></h2>
-
-    <h2>numberOfPosts: <span th:text="*{posts.size()}"></span></h2>
-
-    <h2>numberOfComments: <span th:text="*{comments.size()}"></span></h2>
-
-    <a href="/user/edit">EDIT PROFILE NIGGER</a>
+            <div style="display: inline-block">
+                <a class="gagLink" th:href="@{/gag/{id}(id=${gag.id})}" th:text="${gag.name}">gag</a>
+                <div class="inline">
+                    <img class="materialboxed" th:src="${gag.content}">
+                </div>
+                <a class="grayLink" th:href="@{/gag/{id}(id=${gag.id})}"
+                   th:text="|${gag.upvotes} points  ${gag.comments.size()} comments|"></a>
+                <div style="text-align:left;">
+                    <th:block th:each="tag : ${gag.tags}">
+                        <a th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}" class="chip"></a>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

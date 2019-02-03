@@ -33,7 +33,6 @@ public class HomeController {
             User user = userService.getCurrentUser();
             model.addAttribute("user", user);
         }
-        System.out.println("PROPERTY = " + pathProperty.getPath());
         model.addAttribute("view", "home");
 
 //        return "base-layout";

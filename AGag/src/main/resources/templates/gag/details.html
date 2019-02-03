@@ -15,8 +15,7 @@
         </div>
         <div style="float:left" sec:authorize="isAuthenticated()">
             <button id="likeBtn" th:classappend="${hasLiked} ? disabled : enabled" class="waves-effect waves-light btn">
-                <i
-                        class="material-icons left">arrow_upward</i>Like!
+                <i class="material-icons left">arrow_upward</i>Like!
             </button>
         </div>
         <a style="float:right" sec:authorize="isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(gag)}"
@@ -60,9 +59,9 @@
                     <img style="width:60px; display: inline-block;" th:src="${comment.author.profilePic}">
                 </div>
                 <div style="display:inline-block;">
-                    <span style="font-weight: 700;font-size: 13px;color: #000;"
-                          th:text="${comment.author.nickname}"></span>
-                    <span style="font-size: 11px;line-height: 20px;color: #999;" th:text="${comment.postDate}"></span>
+                    <a th:href="@{/user/{id} (id=${comment.author.id})}" style="font-weight: 700;font-size: 13px;color: #000;"
+                          th:text="${comment.author.nickname}"></a>
+                    <span style="font-size: 11px;line-height: 20px;color: #999;" th:text="${comment.postDate}"></span> <span style="color:rgba(0, 255, 0, 0.4);font-weight: 700" th:if="${comment.author.isAuthor(gag)}">OP</span>
                     <p th:text="${comment.content}"></p>
                 </div>
             </div>

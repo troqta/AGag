@@ -20,7 +20,6 @@ public class UserRestController {
     }
     @GetMapping("/exists/{username}")
     public String checkIfUserExists(@PathVariable String username){
-        System.out.println("im in api user");
         return userService.checkIfUserExists(username);
     }
     @GetMapping("/test")

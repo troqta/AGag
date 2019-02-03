@@ -29,4 +29,6 @@ public interface GagService {
     boolean deleteGag(int id);
 
     String likeRest(int id);
+
+    String checkIfGagExists(String name);
 }

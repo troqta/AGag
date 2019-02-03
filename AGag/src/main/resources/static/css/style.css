@@ -112,3 +112,23 @@ main {
     width:520px;
     margin-bottom: 5%;
 }
+.inline-block{
+    display: inline-block;
+}
+.myCard4{
+    width:auto;
+}
+.myTab{
+    width: 49.6%;
+}
+.myLi{
+    display: flex;
+    align-items: center;
+}
+.myTransparentBtn{
+    background-color: transparent;
+}
+ a{
+    color: inherit;
+    text-decoration: none;
+}

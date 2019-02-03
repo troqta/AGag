@@ -2,6 +2,9 @@ package com.accenture.custom;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ *
+ */
 @ConfigurationProperties("app.upload")
 public class PathProperty {
 

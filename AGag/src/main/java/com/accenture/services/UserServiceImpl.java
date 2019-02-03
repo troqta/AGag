@@ -102,8 +102,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean editUser(User u, UserEditModel edit, MultipartFile file) {
-        u.setNickname(edit.getNickname());
-        u.setEmail(edit.getEmail());
+        if(!edit.getNickname().equals("")){
+            u.setNickname(edit.getNickname());
+        }
+        if (!edit.getEmail().equals("")){
+            u.setEmail(edit.getEmail());
+        }
         if (!file.isEmpty()) {
             String filePath = storage.storeWithCustomLocation(u.getUsername(), file, u.getProfilePic().substring(u.getProfilePic().lastIndexOf("/")));
             u.setProfilePic(filePath);
@@ -116,7 +120,6 @@ public class UserServiceImpl implements UserService {
             u.setPassword(encoder.encode(edit.getPassword()));
 
         }
-        System.out.println();
         userRepository.save(u);
         return true;
     }

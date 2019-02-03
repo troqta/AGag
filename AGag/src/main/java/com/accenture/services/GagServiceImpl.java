@@ -170,7 +170,6 @@ public class GagServiceImpl implements GagService {
         if(gags.isEmpty()){
             return "end";
         }
-        System.out.println("IM HERE");
         return parser.toJson(gags);
     }
 
@@ -182,7 +181,6 @@ public class GagServiceImpl implements GagService {
                 .skip(number)
                 .limit(limit)
                 .collect(Collectors.toList());
-        System.out.println(gags.size());
         if(gags.isEmpty()){
             return "end";
         }
@@ -251,6 +249,15 @@ public class GagServiceImpl implements GagService {
             return "Like successful!";
         }
         else return "You have already liked this gag!";
+    }
+
+    @Override
+    public String checkIfGagExists(String name) {
+        Gag gag = gagRepository.findByName(name);
+        if (gag != null){
+            return "Gag with name " + name + " already exists!";
+        }
+        return "Valid name!";
     }
 
 

@@ -1,10 +1,18 @@
-<form method="POST" enctype="multipart/form-data" th:action="@{/gag/edit/{id} (id=${gag.id})}">
-    <h2>You can only edit a gag's content!</h2>
-    <h3>Current image:</h3>
-    <img style="width:200px;" id="oldImg" th:src="${gag.content}" />
-    <input name="file" type="file" id="editImg">
+<div class="container">
+    <div class="card myCard">
 
-    <div class="button-holder d-flex justify-content-center">
-        <button type="submit" class="btn btn-secondary">Edit</button>
+
+        <form method="POST" class="myForm" enctype="multipart/form-data" th:action="@{/gag/edit/{id} (id=${gag.id})}">
+            <h3>You can only edit a gag's content!</h3>
+            <label for="oldImg">Current image:</label>
+
+            <img style="width:200px;" id="oldImg" th:src="${gag.content}"/>
+
+            <label for="file">New image:</label>
+            <input name="file" id="file" type="file" class="dropify" data-allowed-file-extensions="jpg png jpeg gif" data-height="300">
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn btn-secondary myBtn">Edit</button>
+            </div>
+        </form>
     </div>
-</form>
+</div>

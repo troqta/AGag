@@ -2,6 +2,7 @@ $(document).ready(function () {
     $('.dropdown-trigger').dropdown();
     $('.dropify').dropify();
     $('.tooltipped').tooltip();
+    $('#tabs').tabs();
     var url = $(location).attr('href');
     if (url.includes("gag")) {
         var parameter = url.substring(url.lastIndexOf('/') + 1);
@@ -9,7 +10,6 @@ $(document).ready(function () {
             parameter = parameter.substring(0, parameter.length - 1);
         }
         $('#' + parameter).addClass("active");
-        console.log(parameter);
     }
     $("#sidenavBtn").on('click', function () {
         $('.sidenav').sidenav();
@@ -33,7 +33,6 @@ $(document).ready(function () {
             var xhttp = new XMLHttpRequest();
             xhttp.open("POST", "/admin/api/user/ban/" + $item.text(), true);
             xhttp.onload = function () {
-                console.log('RESPONSE TEXT ' + xhttp.responseText);
                 M.toast({html: xhttp.responseText})
                 if (xhttp.responseText.includes('Successfully')) {
                     $item.parent().css('background-color', 'rgba(255, 0, 0, 0.5)');
@@ -60,7 +59,6 @@ $(document).ready(function () {
             xhttp.open("POST", "/admin/api/user/unban/" + $item.text(), true);
             var flag = false;
             xhttp.onload = function () {
-                console.log('RESPONSE TEXT ' + xhttp.responseText);
                 M.toast({html: xhttp.responseText})
                 if (xhttp.responseText.includes('Successfully')) {
                     $item.parent().css('background-color', 'rgba(0, 255, 0, 0.5)');
@@ -99,7 +97,6 @@ $(document).ready(function () {
                     for (var i in tagArr) {
                         tags += '<a href="/tag/' + tagArr[i].name + '" class="chip">' + tagArr[i].name + '</a>';
                     }
-                    console.log(tags);
                     $('#loadBox').append(
                         '<div class="myGag">' +
                         '<div style="display : inline-block">' +
@@ -118,8 +115,6 @@ $(document).ready(function () {
                         '</div>');
                 }
                 $('.materialboxed').materialbox();
-                console.log(arr);
-                console.log(counter);
 
                 counter++;
             }
@@ -151,7 +146,6 @@ $(document).ready(function () {
                     for (var i in tagArr) {
                         tags += '<a href="/tag/' + tagArr[i].name + '" class="chip">' + tagArr[i].name + '</a>';
                     }
-                    console.log(tags);
                     $('#loadBox').append(
                         '<div class="myGag">' +
                         '<div style="display : inline-block">' +
@@ -170,8 +164,7 @@ $(document).ready(function () {
                         '</div>');
                 }
                 $('.materialboxed').materialbox();
-                console.log(arr);
-                console.log(counter);
+
 
                 counter++;
             }
@@ -254,7 +247,6 @@ $(document).ready(function () {
         var id = parseInt(url.substring(url.lastIndexOf('/') + 1), 10);
         xhttp.open('POST', '/api/gag/like/' + id, true);
         xhttp.onload = function () {
-            console.log(xhttp.responseText);
             if (xhttp.responseText.includes('successful')) {
                 $('#likeBtn').addClass('disabled');
                 var text = $('#pointsComments').html();
@@ -287,7 +279,6 @@ $(document).ready(function () {
             return;
         }
         var url = '/api/user/exists/' + parameter;
-        console.log(url);
         xhttp.open('GET', url, true);
         xhttp.onload = function () {
             var response = xhttp.responseText;
@@ -324,8 +315,6 @@ $(document).ready(function () {
 
         }
         if ($pass1.val() !== $pass2.val()) {
-            console.log($pass1.val());
-            console.log($pass2.val());
             $pass1.removeClass('valid');
             $pass1.addClass('invalid');
             $pass2.removeClass('valid');
@@ -360,7 +349,21 @@ $(document).ready(function () {
             M.toast({html: 'Please upload a file!'});
             return;
         }
-        $('#gagForm').submit();
+        var xhttp = new XMLHttpRequest()
+        xhttp.open('GET', '/api/gag/exists/' + $title.val(), true);
+        xhttp.onload = function () {
+            if (!xhttp.responseText.includes("Valid")){
+                M.toast({html: 'Gag with this title already exists!!'});
+                $title.addClass("invalid");
+
+            }
+            else{
+                $('#gagForm').submit();
+            }
+        };
+        xhttp.send();
+
+
         
     });
 });
