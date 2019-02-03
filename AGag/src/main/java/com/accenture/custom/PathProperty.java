@@ -3,7 +3,8 @@ package com.accenture.custom;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- *
+ *I made this so i can change the upload directory from application properties.
+ * That way if someone wants to deploy the application they can go in the war file and set their directory in application.properties.
  */
 @ConfigurationProperties("app.upload")
 public class PathProperty {
